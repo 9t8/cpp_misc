@@ -20,10 +20,7 @@ ll search_solve(const ll &a, const ll &b) {
   if (a == 1)
     return solve(a, b);
 
-  ll res1(solve(a, b));
-  ll res2(1 + a % 2 + search_solve((a + 1) / 2, b));
-
-  return std::min(res1, res2);
+  return std::min(solve(a, b), 1 + a % 2 + search_solve((a + 1) / 2, b));
 }
 
 int main() {
