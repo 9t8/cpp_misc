@@ -17,10 +17,12 @@ ll solve(ll a, const ll &b) {
 }
 
 ll search_solve(const ll &a, const ll &b) {
-  if (a == 1)
-    return solve(a, b);
+  ll dir_ops(solve(a, b));
 
-  return std::min(solve(a, b), 1 + a % 2 + search_solve((a + 1) / 2, b));
+  if (a == 1)
+    return dir_ops;
+
+  return std::min(dir_ops, 1 + a % 2 + search_solve((a + 1) / 2, b));
 }
 
 int main() {
