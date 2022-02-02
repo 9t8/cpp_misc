@@ -38,7 +38,7 @@ public:
   std::string to_string() const {
     std::ostringstream result;
     result << "Stack (" << size() << " elements):\n";
-    for (size_t i(0); i < 10 && i < size(); ++i)
+    for (int i(0); i < 10 && i < static_cast<int>(size()); ++i)
       result << _data.end()[-1 - i] << "\n";
 
     if (size() > 10)
@@ -88,7 +88,7 @@ public:
   std::string to_string() const {
     std::ostringstream result;
     result << "Stack (" << size() << " elements):\n";
-    for (size_t i(0); i < 10 && i < size(); ++i) {
+    for (int i(0); i < 10 && i < static_cast<int>(size()); ++i) {
       result << _data.end()[-1 - i] << "\n";
     }
     if (size() > 10) {

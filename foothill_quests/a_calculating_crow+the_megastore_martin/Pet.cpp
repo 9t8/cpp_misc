@@ -23,13 +23,15 @@ string Pet::make_a_name(int len) {
   return name.str();
 }
 
-void Pet::get_n_pets(size_t n, vector<Pet> &pets, int name_length) {
+void Pet::get_n_pets(size_t n, std::vector<Pet> &pets, int name_len) {
   pets.resize(n);
-  long id(0);
+  long prev_id = 0;
   for (size_t i = 0; i < n; i++) {
-    pets[i].set_id(id += rand() % 10 + 1);
+    long id = prev_id + 1 + rand() % 10;
+    pets[i].set_id(id);
     pets[i].set_num_limbs(rand() % 9);
-    pets[i].set_name(make_a_name(name_length));
+    pets[i].set_name(make_a_name(name_len));
+    prev_id = id;
   }
 }
 

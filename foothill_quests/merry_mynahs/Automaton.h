@@ -6,7 +6,7 @@
 
 class Automaton {
 public:
-  static size_t pow_2(size_t n) { return size_t(1) << n; }
+  static size_t pow_2(size_t n) { return 1U << n; }
 
   static size_t translate_n_bits_starting_at(const std::vector<int> &bits,
                                              size_t pos, size_t n) {
@@ -28,11 +28,12 @@ public:
   }
 
   std::string generation_to_string(const std::vector<int> &gen, size_t width) {
-    if (width % 2 == 0)
+    if (!_is_valid || width % 2 == 0) // FIX
       return "";
 
     std::string result(width, _extreme_bit == 0 ? ' ' : '*');
-    for (size_t i(0), offset((width - gen.size()) / 2); i < gen.size(); ++i) {
+    for (int i(0), offset((static_cast<int>(width) - gen.size()) / 2);
+         i < static_cast<int>(gen.size()); ++i) {
       try {
         result.at(i + offset) = gen[i] == 0 ? ' ' : '*';
       } catch (const std::exception &e) {
@@ -62,24 +63,24 @@ public:
       return true;
     }
 
-    if (current_gen.size() % 2 == 0) {
+    const int &current_size(current_gen.size());
+
+    if (current_size % 2 == 0) {
       return false;
     }
 
     next_gen.resize(current_gen.size() + _num_parents - 1);
 
-    auto get_cell([&](const size_t &i) {
-      try {
-        return current_gen.at(i);
-      } catch (const std::exception &e) {
+    auto get_cell([&](const int &i) {
+      if (i < 0 || i >= current_size)
         return _extreme_bit;
-      }
+      return current_gen[i];
     });
 
-    for (size_t i(0); i < next_gen.size(); ++i) {
-      size_t parent_value(0);
-      for (int j(1 - _num_parents); j <= 0; ++j) {
-        parent_value = parent_value << 1 | get_cell(i + j);
+    for (int i(next_gen.size() - 1); i >= 0; --i) {
+      unsigned parent_value(0);
+      for (int j(i + 1 - _num_parents); j <= i; ++j) {
+        parent_value = parent_value << 1 | get_cell(j);
       }
       next_gen[i] = _rules[parent_value];
     }
@@ -90,12 +91,13 @@ public:
   }
 
   std::string get_first_n_generations(size_t n, size_t width) {
-    if (width % 2 == 0)
+    if (!_is_valid || width % 2 == 0) // FIX
       return "";
 
     std::string result;
     std::vector<int> cells;
-    for (size_t i(0); i < n; ++i) {
+    _extreme_bit = 0;
+    for (int i(0); i < static_cast<int>(n); ++i) {
       make_next_gen(cells, cells);
       result += generation_to_string(cells, width) + '\n';
     }

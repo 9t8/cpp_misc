@@ -2,6 +2,4 @@
 
 #include <bits/stdc++.h>
 
-int main() {
-  std::cout << Automaton(3, 1).generation_to_string({1, 0, 1}, 5) << '\n';
-}
+int main() { std::cout << Automaton(3, 1).get_first_n_generations(10, 5); }

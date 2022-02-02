@@ -27,7 +27,7 @@ bool play_game(int n) {
 
 double etox(double x, size_t n) {
   double ans(0);
-  for (size_t i(0); i < n; ++i) {
+  for (int i(0); i < static_cast<int>(n); ++i) {
     ans += pow(x, i) / tgamma(i + 1);
   }
   return ans;
@@ -49,8 +49,8 @@ string get_ap_terms(int a, int d, size_t n) {
 
   ostringstream result;
   result << a;
-  for (size_t i(1); i < n; ++i) {
-    result << "," << a + d * static_cast<int>(i);
+  for (int i(1); i < static_cast<int>(n); ++i) {
+    result << "," << a + d * i;
   }
   return result.str();
 }
@@ -61,7 +61,7 @@ string get_gp_terms(double a, double r, size_t n) {
 
   ostringstream result;
   result << a;
-  for (size_t i(1); i < n; ++i) {
+  for (int i(1); i < static_cast<int>(n); ++i) {
     result << "," << a * pow(r, i);
   }
   return result.str();
@@ -69,7 +69,7 @@ string get_gp_terms(double a, double r, size_t n) {
 
 double get_nth_fibonacci_number(size_t n) {
   double a(0), b(1);
-  for (size_t i(0); i < n; ++i) {
+  for (int i(0); i < static_cast<int>(n); ++i) {
     swap(a, b);
     a += b;
   }
