@@ -39,11 +39,28 @@ private:
 
     static bool is_equal(const Node *p1, const Node *p2);
 
-    Node(std::string s = ""); // TODO
+    Node(std::string s = "") : _data(s), _sibling(nullptr), _child(nullptr) {}
 
-    Node(const Node &that); // TODO
+    Node(const Node &that) { *this = that; }
 
-    const Node &operator=(const Node &that); // Deep clone
+    const Node &operator=(const Node &that) {
+      _data = that.get_data();
+      if (that._sibling == nullptr) {
+        delete _sibling;
+      } else {
+        if (_sibling == nullptr)
+          _sibling = new Node();
+        *_sibling = *that._sibling;
+      }
+      if (that._child == nullptr) {
+        delete _child;
+      } else {
+        if (_child == nullptr)
+          _child = new Node();
+        *_child = *that._child;
+      }
+      return *this;
+    }
 
     ~Node();
 
@@ -51,9 +68,17 @@ private:
 
     void set_data(std::string s) { _data = s; }
 
-    Node *insert_sibling(Node *p);
+    Node *insert_sibling(Node *p) {
+      Node *last_node = this;
+      while (last_node->_sibling != nullptr)
+        last_node = last_node->_sibling;
+      return last_node->_sibling = p;
+    }
 
-    Node *insert_child(Node *p);
+    Node *insert_child(Node *p) {
+      return (_child == nullptr ? this : insert_sibling(new Node()))->_child =
+                 p;
+    }
 
     std::string to_string() const;
 
