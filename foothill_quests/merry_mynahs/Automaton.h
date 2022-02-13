@@ -28,7 +28,7 @@ public:
   }
 
   std::string generation_to_string(const std::vector<int> &gen, size_t width) {
-    if (!_is_valid || width % 2 == 0) // check order
+    if (!_is_valid || width % 2 == 0)
       return "";
 
     std::string result(width, _extreme_bit == 0 ? ' ' : '*');
@@ -91,7 +91,7 @@ public:
   }
 
   std::string get_first_n_generations(size_t n, size_t width) {
-    if (!_is_valid || width % 2 == 0) // check order
+    if (!_is_valid || width % 2 == 0)
       return "";
 
     std::string result;
