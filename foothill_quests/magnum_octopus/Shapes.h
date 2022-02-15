@@ -8,7 +8,6 @@
 // A virtual screen with pixels x: 0-(w-1) and y: 0-(h-1)
 // NOTE: (0,0) is the bottom left - Pixels can be any character, determined
 // by each Point.
-//
 class Screen {
 public:
   static const char FG = '*', BG = '.';
@@ -46,7 +45,6 @@ private:
 // --------- Shape ---------------------------------
 // Anstract base class for circle, rectangle, line, point, triangle, polygon,
 // etc.
-//
 class Shape {
 public:
   virtual ~Shape() {}
@@ -98,7 +96,6 @@ private:
 // A general quadrilateral with points (x1,y1) ... (x4,y4), clockwise
 // from bottom left. For the special case when x1==x2, y2==y3, x3==x4
 // and y4==y1, we'd use an Upright_Rectangle.
-//
 class Quadrilateral : public Shape {
 public:
   Quadrilateral(size_t a, size_t b, size_t c, size_t d, size_t e, size_t f,
@@ -118,7 +115,6 @@ private:
 // ----------- UprightRectangle, a special Quadrilateral -----------------
 // A Rectangle is a special upright Quadrilateral so we don't have to
 // parameterize the constructor with a ton of numbers
-//
 class Upright_Rectangle : public Quadrilateral {
 public:
   Upright_Rectangle(size_t x1, size_t y1, size_t x2, size_t y2)
