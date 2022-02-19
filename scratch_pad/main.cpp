@@ -8,5 +8,5 @@ int main() {
   std::array a = {1, 2, 3};
   int n;
   std::cin >> n;
-  std::cout << a[n];
+  std::cout << a[n] << '\n';
 }
