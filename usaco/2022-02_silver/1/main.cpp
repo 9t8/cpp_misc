@@ -2,7 +2,8 @@
 
 using ll = long long;
 
-int main() {
+int main()
+{
   std::cin.tie(nullptr)->sync_with_stdio(false);
 
   ll N;

@@ -12,18 +12,21 @@
 // *BEFORE* the current one. This makes the manipulations easy because we can
 // only look forward (and not back) in singly linked lists.
 
-class String_List {
+class String_List
+{
 public:
   String_List()
       : _head(new Node("_SENTINEL_")), _tail(_head), _prev_to_current(_head),
         _size(0) {}
 
-  ~String_List() {
+  ~String_List()
+  {
     clear();
     delete _head;
   }
 
-  String_List *insert_at_current(std::string s) {
+  String_List *insert_at_current(std::string s)
+  {
     auto ptr_new(new Node(s));
     ptr_new->next = _prev_to_current->next;
     _prev_to_current->next = ptr_new;
@@ -35,7 +38,8 @@ public:
     return this;
   }
 
-  String_List *push_back(std::string s) {
+  String_List *push_back(std::string s)
+  {
     _tail = _tail->next = new Node(s);
 
     ++_size;
@@ -43,7 +47,8 @@ public:
     return this;
   }
 
-  String_List *push_front(std::string s) {
+  String_List *push_front(std::string s)
+  {
     auto ptr_new(new Node(s));
     ptr_new->next = _head->next;
     _head->next = ptr_new;
@@ -55,7 +60,8 @@ public:
     return this;
   }
 
-  String_List *advance_current() {
+  String_List *advance_current()
+  {
     if (_prev_to_current == _tail)
       return nullptr;
 
@@ -66,7 +72,8 @@ public:
 
   std::string get_current() const { return _prev_to_current->next->data; }
 
-  String_List *remove_at_current() {
+  String_List *remove_at_current()
+  {
     if (_prev_to_current->next == _tail)
       _tail = _prev_to_current;
 
@@ -81,14 +88,17 @@ public:
 
   size_t get_size() const { return _size; }
 
-  String_List *rewind() {
+  String_List *rewind()
+  {
     _prev_to_current = _head;
 
     return this;
   }
 
-  void clear() {
-    while (_head->next != nullptr) {
+  void clear()
+  {
+    while (_head->next != nullptr)
+    {
       auto ptr_curr_node(_head->next);
       _head->next = ptr_curr_node->next;
       delete ptr_curr_node;
@@ -106,7 +116,8 @@ public:
   // sentinel that's global. We will use a local one so it's cleaner with a
   // little more risk (what's the risk?)
 
-  std::string &find_item(std::string s) const {
+  std::string &find_item(std::string s) const
+  {
     for (auto ptr_node(_head->next); ptr_node != nullptr;
          ptr_node = ptr_node->next)
       if (ptr_node->data == s)
@@ -120,7 +131,8 @@ public:
   // caller wants to print from the beginning of the list, they should rewind()
   // it first.
 
-  std::string to_string() const {
+  std::string to_string() const
+  {
     std::ostringstream result;
 
     result << "# String_List - " << get_size()
@@ -128,8 +140,10 @@ public:
 
     int i(0);
     for (auto ptr_node(_prev_to_current->next); ptr_node != nullptr;
-         ptr_node = ptr_node->next) {
-      if (++i >= 25) {
+         ptr_node = ptr_node->next)
+    {
+      if (++i >= 25)
+      {
         result << "...\n";
         break;
       }
@@ -142,7 +156,8 @@ public:
 private:
   friend class Tests;
 
-  struct Node {
+  struct Node
+  {
     std::string data;
     Node *next;
     Node(std::string s = "") : data(s), next(nullptr) {}

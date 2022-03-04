@@ -4,7 +4,8 @@
 
 #include <bits/stdc++.h>
 
-class Tree {
+class Tree
+{
 public:
   Tree() : _root(new Node("ROOT")) {}
 
@@ -12,19 +13,22 @@ public:
 
   ~Tree() { delete _root; }
 
-  Tree &operator=(const Tree &that) {
+  Tree &operator=(const Tree &that)
+  {
     *_root = *that._root;
     return *this;
   }
 
-  std::string to_string() const {
+  std::string to_string() const
+  {
     return "# Tree rooted at " + _root->_data +
            "\n# The following lines are of the form:\n"
            "#   node: child1 child2...\n" +
            _root->to_string() + "# End of Tree\n";
   }
 
-  void make_special_config_1(const std::vector<std::string> &names) {
+  void make_special_config_1(const std::vector<std::string> &names)
+  {
     _root = new Node("ROOT");
     _root->insert_sibling(new Node(names[0]))
         ->insert_sibling(new Node(names[1]))
@@ -58,18 +62,21 @@ public:
 
   bool operator!=(const Tree &that) const { return !(*this == that); }
 
-  friend std::ostream &operator<<(std::ostream &os, const Tree &tree) {
+  friend std::ostream &operator<<(std::ostream &os, const Tree &tree)
+  {
     return os << tree.to_string();
   }
 
 private:
   friend class Tests;
 
-  struct Node {
+  struct Node
+  {
     std::string _data;
     Node *_sibling, *_child;
 
-    static bool is_equal(const Node *p1, const Node *p2) {
+    static bool is_equal(const Node *p1, const Node *p2)
+    {
       if (p1 == nullptr || p2 == nullptr)
         return p1 == nullptr && p2 == nullptr;
 
@@ -80,24 +87,32 @@ private:
 
     Node(std::string s = "") : _data(s), _sibling(nullptr), _child(nullptr) {}
 
-    Node(const Node &that) : _sibling(nullptr), _child(nullptr) {
+    Node(const Node &that) : _sibling(nullptr), _child(nullptr)
+    {
       *this = that;
     }
 
-    const Node &operator=(const Node &that) {
+    const Node &operator=(const Node &that)
+    {
       _data = that._data;
-      if (that._sibling == nullptr) {
+      if (that._sibling == nullptr)
+      {
         delete _sibling;
         _sibling = nullptr;
-      } else {
+      }
+      else
+      {
         if (_sibling == nullptr)
           _sibling = new Node();
         *_sibling = *that._sibling;
       }
-      if (that._child == nullptr) {
+      if (that._child == nullptr)
+      {
         delete _child;
         _child = nullptr;
-      } else {
+      }
+      else
+      {
         if (_child == nullptr)
           _child = new Node();
         *_child = *that._child;
@@ -105,7 +120,8 @@ private:
       return *this;
     }
 
-    ~Node() {
+    ~Node()
+    {
       delete _sibling;
       delete _child;
     }
@@ -114,23 +130,27 @@ private:
 
     void set_data(std::string s) { _data = s; }
 
-    Node *insert_sibling(Node *p) {
+    Node *insert_sibling(Node *p)
+    {
       Node *last_node = this;
       while (last_node->_sibling != nullptr)
         last_node = last_node->_sibling;
       return last_node->_sibling = p;
     }
 
-    Node *insert_child(Node *p) {
+    Node *insert_child(Node *p)
+    {
       if (_child == nullptr)
         return _child = p;
 
       return _child->insert_sibling(p);
     }
 
-    std::string to_string() const {
+    std::string to_string() const
+    {
       std::string result(_data + " :");
-      for (auto p_it(_child); p_it != nullptr; p_it = p_it->_sibling) {
+      for (auto p_it(_child); p_it != nullptr; p_it = p_it->_sibling)
+      {
         result += " " + p_it->_data;
       }
       result += '\n';
@@ -140,7 +160,8 @@ private:
 
       result += "# Child of " + _data + "\n" + _child->to_string();
       for (auto p_it(_child); p_it->_sibling != nullptr;
-           p_it = p_it->_sibling) {
+           p_it = p_it->_sibling)
+      {
         result +=
             "# Next sib of " + p_it->_data + "\n" + p_it->_sibling->to_string();
       }

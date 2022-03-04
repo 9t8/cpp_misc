@@ -4,9 +4,11 @@
 
 #include <bits/stdc++.h>
 
-class Hanoi {
+class Hanoi
+{
 public:
-  std::string solve(int num_discs, int src, int dst, int tmp) {
+  std::string solve(int num_discs, int src, int dst, int tmp)
+  {
     return "# Below, 'A->B' means 'move the top disc on pole A to pole B'\n" +
            get_moves(num_discs, src, dst, tmp);
   }
@@ -16,15 +18,20 @@ private:
 
   std::vector<std::vector<std::vector<std::string>>> _cache;
 
-  std::string lookup_moves(int num_discs, int src, int dst) {
-    try {
+  std::string lookup_moves(int num_discs, int src, int dst)
+  {
+    try
+    {
       return _cache.at(num_discs).at(src).at(dst);
-    } catch (const std::out_of_range &e) {
+    }
+    catch (const std::out_of_range &e)
+    {
       return "";
     }
   }
 
-  std::string get_moves(int num_discs, int src, int dst, int tmp) {
+  std::string get_moves(int num_discs, int src, int dst, int tmp)
+  {
     if (num_discs == 0)
       return "";
 

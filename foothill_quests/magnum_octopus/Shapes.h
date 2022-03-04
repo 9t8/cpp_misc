@@ -8,7 +8,8 @@
 // A virtual screen with pixels x: 0-(w-1) and y: 0-(h-1)
 // NOTE: (0,0) is the bottom left - Pixels can be any character, determined
 // by each Point.
-class Screen {
+class Screen
+{
 public:
   static const char FG = '*', BG = '.';
 
@@ -30,7 +31,8 @@ public:
 
   std::string to_string() const;
 
-  friend std::ostream &operator<<(std::ostream &os, const Screen &scr) {
+  friend std::ostream &operator<<(std::ostream &os, const Screen &scr)
+  {
     return os << scr.to_string();
   };
 
@@ -45,7 +47,8 @@ private:
 // --------- Shape ---------------------------------
 // Anstract base class for circle, rectangle, line, point, triangle, polygon,
 // etc.
-class Shape {
+class Shape
+{
 public:
   virtual ~Shape() {}
 
@@ -56,7 +59,8 @@ private:
 };
 
 // --------- Point ---------------------------------
-class Point : public Shape {
+class Point : public Shape
+{
 public:
   Point(size_t x, size_t y) : _x(x), _y(y) {}
 
@@ -71,7 +75,8 @@ private:
 };
 
 // ----------- Line in two point notation ---------------------
-class Line : public Shape {
+class Line : public Shape
+{
 public:
   Line(size_t a, size_t b, size_t c, size_t d)
       : _x1(a), _y1(b), _x2(c), _y2(d) {}
@@ -96,7 +101,8 @@ private:
 // A general quadrilateral with points (x1,y1) ... (x4,y4), clockwise
 // from bottom left. For the special case when x1==x2, y2==y3, x3==x4
 // and y4==y1, we'd use an Upright_Rectangle.
-class Quadrilateral : public Shape {
+class Quadrilateral : public Shape
+{
 public:
   Quadrilateral(size_t a, size_t b, size_t c, size_t d, size_t e, size_t f,
                 size_t g, size_t h)
@@ -115,7 +121,8 @@ private:
 // ----------- UprightRectangle, a special Quadrilateral -----------------
 // A Rectangle is a special upright Quadrilateral so we don't have to
 // parameterize the constructor with a ton of numbers
-class Upright_Rectangle : public Quadrilateral {
+class Upright_Rectangle : public Quadrilateral
+{
 public:
   Upright_Rectangle(size_t x1, size_t y1, size_t x2, size_t y2)
       : Quadrilateral(x1, y1, x1, y2, x2, y2, x2, y1) {}
@@ -124,7 +131,8 @@ public:
 };
 
 // ----------- StickMan, a composite Shape ------------------------------
-class Stick_Man : public Shape {
+class Stick_Man : public Shape
+{
 public:
   Stick_Man(size_t x = 0, size_t y = 0, size_t w = DEFAULT_W,
             size_t h = DEFAULT_H);

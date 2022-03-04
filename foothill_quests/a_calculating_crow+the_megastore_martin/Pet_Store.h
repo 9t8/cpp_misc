@@ -4,7 +4,8 @@
 
 #include <bits/stdc++.h>
 
-class Pet_Store {
+class Pet_Store
+{
 public:
   Pet_Store(size_t n = 0);
 
@@ -31,7 +32,12 @@ public:
 private:
   friend class Tests;
 
-  enum _SORT_ORDER { BY_ID, BY_NAME, NONE };
+  enum _SORT_ORDER
+  {
+    BY_ID,
+    BY_NAME,
+    NONE
+  };
 
   std::vector<Pet> _pets;
   _SORT_ORDER _sort_order = BY_ID;

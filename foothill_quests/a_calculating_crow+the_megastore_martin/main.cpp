@@ -5,7 +5,8 @@
 
 using namespace std;
 
-int main() {
+int main()
+{
   Pet_Store pet_store(20);
   pet_store.populate_with_n_random_pets(20);
   int id;
