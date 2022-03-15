@@ -6,7 +6,11 @@ int main()
 {
   std::cin.tie(nullptr)->sync_with_stdio(false);
 
-  ll a(1), b(2);
-  a ^= b ^= a ^= b;
-  std::cout << a << b << '\n';
+  double *dubPtr;
+  double dubArray[100];
+
+  dubPtr = new double[50];
+  dubPtr = dubArray;
+  dubPtr[75] = 9;
+  delete[] dubPtr;
 }
