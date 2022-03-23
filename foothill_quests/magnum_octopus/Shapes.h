@@ -9,7 +9,7 @@ public:
   static const char FG = '*', BG = '.';
 
   Screen(size_t w, size_t h)
-      : _w(w), _h(h), _pix(h, std::vector<char>(w, BG)) {}
+      : _w(w), _h(h), _pix(h, std::vector<char>(w, '.')) {}
 
   size_t get_w() const { return _w; }
 
@@ -90,9 +90,11 @@ public:
   virtual ~Line() {}
 
   bool draw(Screen &scr, char ch = Screen::FG) {
-    return (static_cast<long long>(_y2) - _y1) /
-                       (static_cast<long long>(_x2) - _x1) ==
-                   0
+    return _x1 != _x2 &&
+                   (static_cast<long long>(_y2) - static_cast<long long>(_y1)) /
+                           (static_cast<long long>(_x2) -
+                            static_cast<long long>(_x1)) ==
+                       0
                ? draw_by_x(scr, ch, _x1, _y1, _x2, _y2)
                : draw_by_y(scr, ch, _x1, _y1, _x2, _y2);
   }
@@ -148,9 +150,9 @@ public:
   virtual ~Quadrilateral() {}
 
   bool draw(Screen &scr, char ch = Screen::FG) {
-    return Line(_x1, _y1, _x2, _y2).draw(scr, ch) &&
-           Line(_x2, _y2, _x3, _y3).draw(scr, ch) &&
-           Line(_x3, _y3, _x4, _y4).draw(scr, ch) &&
+    return Line(_x1, _y1, _x2, _y2).draw(scr, ch) &
+           Line(_x2, _y2, _x3, _y3).draw(scr, ch) &
+           Line(_x3, _y3, _x4, _y4).draw(scr, ch) &
            Line(_x4, _y4, _x1, _y1).draw(scr, ch);
   }
 
@@ -175,13 +177,30 @@ public:
 class Stick_Man : public Shape {
 public:
   Stick_Man(size_t x = 0, size_t y = 0, size_t w = DEFAULT_W,
-            size_t h = DEFAULT_H);
+            size_t h = DEFAULT_H)
+      : _x(x), _y(y), _w(w < 2 ? DEFAULT_W : w), _h(h < 2 ? DEFAULT_H : h),
+        _parts{new Upright_Rectangle(x, y + _h / 2, x + _w - 1, y + _h - 1),
+               new Line(x + _w / 2, y + _h / 2, x + _w / 2, y + _h / 4),
+               new Line(x + _w / 2, y + _h / 2, x + _w / 4, y + _h / 4),
+               new Line(x + _w / 2, y + _h / 2, x + 3 * _w / 4, y + _h / 4),
+               new Line(x + _w / 2, y + _h / 4, x, y),
+               new Line(x + _w / 2, y + _h / 4, x + _w - 1, y)} {}
 
-  virtual ~Stick_Man(); // Needed to deallocate parts
+  virtual ~Stick_Man() {
+    for (const auto &part : get_parts()) {
+      delete part;
+    }
+  }
 
   const std::vector<Shape *> &get_parts() const { return _parts; }
 
-  bool draw(Screen &scr, char ch = Screen::FG);
+  bool draw(Screen &scr, char ch = Screen::FG) {
+    bool contained(true);
+    for (const auto &part : get_parts()) {
+      contained &= part->draw(scr, ch);
+    }
+    return contained;
+  }
 
 private:
   friend class Tests;
