@@ -4,8 +4,7 @@
 
 using namespace std;
 
-void draw_cat()
-{
+void draw_cat() {
   cout << "  -------\n"
           " | /\\_/\\ |\n"
           " |( o o )|\n"

@@ -2,8 +2,7 @@
 
 #include <bits/stdc++.h>
 
-class Pet
-{
+class Pet {
 public:
   static std::string make_a_name(int len);
 

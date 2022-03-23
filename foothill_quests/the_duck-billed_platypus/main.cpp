@@ -4,8 +4,7 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
   String_List sl;
   sl.push_back("a");
   sl.push_back("s");
