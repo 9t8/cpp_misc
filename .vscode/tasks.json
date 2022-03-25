@@ -34,7 +34,6 @@
 				"-Winline",
 				"-Winvalid-pch",
 				"-Wzero-as-null-pointer-constant",
-				"-Wuseless-cast",
 				"-fsanitize=undefined",
 				"-fsanitize-undefined-trap-on-error",
 				"-Og",

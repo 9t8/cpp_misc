@@ -5,7 +5,7 @@
 #include <bits/stdc++.h>
 
 struct Trie {
-  Trie() : _root(new Node()) {}
+  Trie() : _root(new Node) {}
 
   ~Trie() { delete _root; }
 
@@ -56,7 +56,7 @@ struct Trie {
         next.resize(s[0] + 1);
 
       if (next[s[0]] == nullptr)
-        next[s[0]] = new Node();
+        next[s[0]] = new Node;
 
       if (!s.empty())
         next[s[0]]->insert(s.substr(1));

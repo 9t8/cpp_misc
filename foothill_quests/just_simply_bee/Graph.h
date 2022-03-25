@@ -59,10 +59,8 @@ public:
   }
 
   void make_purty_pitcher() {
-    _nodes.clear();
-    int depth(3);
-    _nodes.resize(2 * powl(3, depth - 1) + 1);
-    sierpinski(depth, 0, 0);
+    _nodes = {{{1, ""}}, {{2, ""}}, {{0, ""}}};
+    sierpinski(2, 0);
   }
 
 protected:
@@ -75,16 +73,23 @@ protected:
 
   std::vector<std::vector<Edge>> _nodes;
 
-  void sierpinski(const int &depth, const int &link_root,
-                  const int &node_root) {
-    if (depth == 1) {
-      _nodes[link_root] = {{node_root + 1, ""}, {node_root + 2, ""}};
+  void sierpinski(const int &depth, const int &i_v) {
+    if (depth == 0)
       return;
-    }
-    sierpinski(depth - 1, link_root, node_root);
-    int root_offset(powl(3, depth - 2));
-    sierpinski(depth - 1, node_root + root_offset, node_root + 2 * root_offset);
-    sierpinski(depth - 1, node_root + 2 * root_offset,
-               node_root + 4 * root_offset);
+
+    const int i_v1(_nodes[i_v].front()._dst), i_v2(_nodes[i_v1].front()._dst),
+        i_midpts(_nodes.size());
+
+    _nodes.push_back({{i_midpts + 2, ""}, {i_v1, ""}});
+    _nodes.push_back({{i_midpts, ""}, {i_v2, ""}});
+    _nodes.push_back({{i_midpts + 1, ""}, {i_v, ""}});
+
+    _nodes[i_v].front() = {i_midpts, ""};
+    _nodes[i_v1].front() = {i_midpts + 1, ""};
+    _nodes[i_v2].front() = {i_midpts + 2, ""};
+
+    sierpinski(depth - 1, i_v);
+    sierpinski(depth - 1, i_v1);
+    sierpinski(depth - 1, i_v2);
   }
 };

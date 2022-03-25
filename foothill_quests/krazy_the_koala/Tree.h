@@ -8,7 +8,7 @@ class Tree {
 public:
   Tree() : _root(new Node("ROOT")) {}
 
-  Tree(const Tree &that) : _root(new Node()) { *this = that; }
+  Tree(const Tree &that) : _root(new Node) { *this = that; }
 
   ~Tree() { delete _root; }
 
@@ -91,7 +91,7 @@ private:
         _sibling = nullptr;
       } else {
         if (_sibling == nullptr)
-          _sibling = new Node();
+          _sibling = new Node;
         *_sibling = *that._sibling;
       }
       if (that._child == nullptr) {
@@ -99,7 +99,7 @@ private:
         _child = nullptr;
       } else {
         if (_child == nullptr)
-          _child = new Node();
+          _child = new Node;
         *_child = *that._child;
       }
       return *this;
