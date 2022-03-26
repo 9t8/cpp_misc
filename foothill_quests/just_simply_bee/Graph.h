@@ -58,9 +58,8 @@ public:
       _nodes[i] = {{i + 1, "Yippee-Dodo-#" + std::to_string(i)}};
   }
 
-  void make_purty_pitcher() {
+  void make_purty_pitcher() { // use rule 60, then map to graph
     _nodes = {{{1, ""}}, {{2, ""}}, {{0, ""}}};
-    sierpinski(2, 0);
   }
 
 protected:
@@ -72,24 +71,4 @@ protected:
   };
 
   std::vector<std::vector<Edge>> _nodes;
-
-  void sierpinski(const int &depth, const int &i_v) {
-    if (depth == 0)
-      return;
-
-    const int i_v1(_nodes[i_v].front()._dst), i_v2(_nodes[i_v1].front()._dst),
-        i_midpts(_nodes.size());
-
-    _nodes.push_back({{i_midpts + 2, ""}, {i_v1, ""}});
-    _nodes.push_back({{i_midpts, ""}, {i_v2, ""}});
-    _nodes.push_back({{i_midpts + 1, ""}, {i_v, ""}});
-
-    _nodes[i_v].front() = {i_midpts, ""};
-    _nodes[i_v1].front() = {i_midpts + 1, ""};
-    _nodes[i_v2].front() = {i_midpts + 2, ""};
-
-    sierpinski(depth - 1, i_v);
-    sierpinski(depth - 1, i_v1);
-    sierpinski(depth - 1, i_v2);
-  }
 };
