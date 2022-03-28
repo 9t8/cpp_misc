@@ -58,8 +58,43 @@ public:
       _nodes[i] = {{i + 1, "Yippee-Dodo-#" + std::to_string(i)}};
   }
 
-  void make_purty_pitcher() { // use rule 60, then map to graph
-    _nodes = {{{1, ""}}, {{2, ""}}, {{0, ""}}};
+  void make_purty_pitcher() {
+    static const int &DEPTH(3);
+    static const int &NUM_ROWS(1 << DEPTH);
+    static const char &AUTOMATON_RULE(60);
+
+    _nodes = {{}};
+    std::vector<int> prev_gen = {0};
+
+    for (int i(1); i < NUM_ROWS; ++i) {
+      std::vector<int> curr_gen(prev_gen.size() + 1, -1);
+
+      for (int j(0); j < static_cast<int>(curr_gen.size()); ++j) {
+        static const auto &prev_gen_get([&](const size_t &pos) {
+          return pos < prev_gen.size() ? prev_gen[pos] != -1 : false;
+        });
+
+        if ((AUTOMATON_RULE >> (prev_gen_get(j - 1) * 4 + prev_gen_get(j) * 2 +
+                                prev_gen_get(j + 1)) &
+             1) == 1) {
+          curr_gen[j] = _nodes.size();
+
+          std::vector<Edge> new_node;
+          if (j > 0 && curr_gen[j - 1] != -1)
+            new_node.push_back({curr_gen[j - 1], ""});
+
+          if (j > 0 && prev_gen[j - 1] != -1)
+            new_node.push_back({prev_gen[j - 1], ""});
+
+          if (j < int(prev_gen.size()) && prev_gen[j] != -1)
+            new_node.push_back({prev_gen[j], ""});
+
+          _nodes.push_back(new_node);
+        }
+      }
+
+      prev_gen = curr_gen;
+    }
   }
 
 protected:
