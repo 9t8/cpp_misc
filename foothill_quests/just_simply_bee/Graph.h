@@ -71,7 +71,7 @@ public:
 
       for (int j(0); j < static_cast<int>(curr_gen.size()); ++j) {
         static const auto &prev_gen_get([&](const size_t &pos) {
-          return pos < prev_gen.size() ? prev_gen[pos] != -1 : 0;
+          return pos < prev_gen.size() ? std::min(prev_gen[pos] + 1, 1) : 0;
         });
 
         if ((AUTOMATON_RULE >> (prev_gen_get(j - 1) * 4 + prev_gen_get(j) * 2 +
@@ -92,12 +92,6 @@ public:
           _nodes.push_back(new_node);
         }
       }
-
-      for (const auto &e : curr_gen) {
-        std::cerr.width(3);
-        std::cerr << e;
-      }
-      std::cerr << '\n';
 
       prev_gen = curr_gen;
     }
