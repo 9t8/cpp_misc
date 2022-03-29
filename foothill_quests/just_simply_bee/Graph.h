@@ -59,6 +59,35 @@ public:
   }
 
   void make_purty_pitcher() {
+    _nodes = {{}, {}};
+    sierpinski(3, 0, 1);
+  }
+
+protected:
+  friend class Tests;
+
+  struct Edge {
+    int _dst;
+    std::string _tag;
+  };
+
+  std::vector<std::vector<Edge>> _nodes;
+
+private:
+  int sierpinski(int depth, int root, int root1) {
+    if (depth == 0) {
+      _nodes[root1].push_back({root, ""});
+      _nodes.push_back({{root, ""}, {root1, ""}});
+      return _nodes.size() - 1;
+    }
+
+    int mid(_nodes.size());
+    _nodes.push_back({});
+    return sierpinski(depth - 1, sierpinski(depth - 1, root, mid),
+                      sierpinski(depth - 1, mid, root1));
+  }
+
+  void old_sierpinski() {
     static const int &DEPTH(3);
     static const int &NUM_ROWS(1 << DEPTH);
     static const char &AUTOMATON_RULE(60);
@@ -96,14 +125,4 @@ public:
       prev_gen = curr_gen;
     }
   }
-
-protected:
-  friend class Tests;
-
-  struct Edge {
-    int _dst;
-    std::string _tag;
-  };
-
-  std::vector<std::vector<Edge>> _nodes;
 };
