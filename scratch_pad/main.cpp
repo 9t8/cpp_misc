@@ -1,24 +1,15 @@
 #include <bits/stdc++.h>
 
-using ll = long long;
+class Datum {};
 
-struct s {
-  virtual ~s() {}
+class SimpleDatum : public Datum {};
 
-  virtual void f() { std::cout << "s\n"; }
-};
-
-struct t : public s {
-  virtual ~t() {}
-
-  void f() { std::cout << "t\n"; }
-};
+class List : public Datum {};
 
 int main() {
-  std::cin.tie(nullptr)->sync_with_stdio(false);
-
-  s *p(new t);
-  p->f();
-  static_cast<s>(*p).f();
-  delete p;
+  while (!std::cin.eof()) {
+    std::cin >> std::ws;
+    if (std::cin.peek() == '(') {
+    }
+  }
 }
