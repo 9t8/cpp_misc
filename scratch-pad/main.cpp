@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 
-// DEFINITIONS
+//===- DEFINITIONS -===
 
 enum cat {
   ag,
@@ -60,7 +60,7 @@ void table_to_list(const std::vector<compound> &rows,
   }
 }
 
-// DATA
+//===- DATA -===
 
 const std::vector<compound> s1_rows{
     {al, cl}, {ba, cl},  {k, i},     {k, po4},  {k, cro4},  {mg, cl},
@@ -117,7 +117,7 @@ const std::vector<std::vector<bool>> s3_data{
 };
 // clang-format on
 
-// MAIN CODE
+//===- MAIN CODE -===
 
 void gen_mix_list(std::deque<mix> &mixes) {
   mixes.clear();
@@ -139,7 +139,7 @@ void gen_soluble_evi(const std::deque<mix> &mixes,
   }
 }
 
-// TODO: MAYBE PUSH MORE EVIDENCE: TAKE ADVANTAGE OF DELIM
+// TODO: maybe push more evidence: take advantage of delim
 void gen_insol_evi(const std::deque<mix> &mixes,
                    const evidence_table &soluble_evi,
                    evidence_table &insol_evi) {
