@@ -133,7 +133,7 @@ private:
       for (auto p_it(_child); p_it != nullptr; p_it = p_it->_sibling) {
         result += " " + p_it->_data;
       }
-      result += '\n';
+      result += "\n";
 
       if (_child == nullptr)
         return result;

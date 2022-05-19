@@ -26,5 +26,5 @@ int main() {
     if (std::next(new_cow) != cows.end())
       ans += *std::next(new_cow) - *new_cow + 1;
   }
-  std::cout << ans << '\n';
+  std::cout << ans << "\n";
 }

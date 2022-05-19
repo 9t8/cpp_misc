@@ -11,5 +11,5 @@ int main() {
   int id;
   cin >> id;
   Pet pet;
-  cout << pet_store.find_pet_by_id_bin(id, pet) << '\n';
+  cout << pet_store.find_pet_by_id_bin(id, pet) << "\n";
 }

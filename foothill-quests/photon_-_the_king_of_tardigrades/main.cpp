@@ -79,9 +79,9 @@ int main() {
   assert(tests.get_completions("", completions, 4) == 4);
   assert(completions == expected);
   // Test to_string
-  std::cout << t.to_string(100) << '\n';
+  std::cout << t.to_string(100) << "\n";
   // Test to_string with ellipses
-  std::cout << t.to_string(2) << '\n';
+  std::cout << t.to_string(2) << "\n";
   // Now test completions from a string onwards
   expected.clear();
   expected.shrink_to_fit();

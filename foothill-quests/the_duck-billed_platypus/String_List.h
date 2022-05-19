@@ -133,7 +133,7 @@ public:
         result << "...\n";
         break;
       }
-      result << ptr_node->data << '\n';
+      result << ptr_node->data << "\n";
     }
 
     return result.str();

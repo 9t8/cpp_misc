@@ -94,7 +94,7 @@ int main() {
   lex(std::cin, tokens);
 
   for (const std::unique_ptr<token> &t : tokens)
-    std::cout << *t << '\n';
+    std::cout << *t << "\n";
 
   list l;
   parse(tokens, l);

@@ -56,9 +56,9 @@ public:
     std::ostringstream result;
     result << "# Queue - size = " << size() << "\ndata :";
     for (size_t i = _head; i != _tail; i = (i + 1) % _data.size()) {
-      result << ' ' << _data[i];
+      result << " " << _data[i];
     }
-    result << '\n';
+    result << "\n";
 
     return result.str();
   }

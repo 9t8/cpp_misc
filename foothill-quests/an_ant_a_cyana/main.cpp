@@ -28,7 +28,7 @@ int main() {
   for (int i = 0; i < 5; ++i) {
     assert(q.enqueue(elem + i * inc) == true);
   }
-  std::cout << q.to_string() << '\n';
+  std::cout << q.to_string() << "\n";
 
   std::cout << "Queue is full, next enqueue needs to fail \n\n";
   assert(q.is_empty() == false);
@@ -66,7 +66,7 @@ int main() {
     assert(q.enqueue(elem + i * inc) == true);
   }
 
-  std::cout << q.to_string(3) << '\n';
+  std::cout << q.to_string(3) << "\n";
 
   std::cout << "3 - Resizing to a less size then original...\n";
   // The transition from larger to less than original (size 5) is tricky. You
@@ -83,7 +83,7 @@ int main() {
   for (int i = 0; i < 5; ++i) {
     assert(qPop.enqueue(elem + i * inc) == true);
   }
-  std::cout << qPop.to_string() << '\n';
+  std::cout << qPop.to_string() << "\n";
   popalot(qPop);
   assert(qPop.size() == 0);
   std::cout << "After Pop-a-Lot, no elements\n";

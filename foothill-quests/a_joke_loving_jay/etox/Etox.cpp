@@ -12,5 +12,5 @@ int main() {
   string input;
   getline(cin, input);
 
-  cout << etox_5_terms(stod(input)) << '\n';
+  cout << etox_5_terms(stod(input)) << "\n";
 }

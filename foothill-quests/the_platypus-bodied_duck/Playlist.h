@@ -24,7 +24,7 @@ public:
     }
 
     bool set_name(std::string name) {
-      if (name == "")
+      if (name.empty())
         return false;
 
       _name = name;

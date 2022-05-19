@@ -39,6 +39,6 @@ int main() {
       ++p /= 2;
     }
 
-    std::cout << ops + search_solve(p, q) << '\n';
+    std::cout << ops + search_solve(p, q) << "\n";
   }
 }

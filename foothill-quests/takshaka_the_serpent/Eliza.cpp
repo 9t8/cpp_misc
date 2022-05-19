@@ -78,7 +78,7 @@ void enter() {
     string input;
     getline(cin, input);
 
-    if (input == "") {
+    if (input.empty()) {
       cout << "What?\n";
       continue;
     }

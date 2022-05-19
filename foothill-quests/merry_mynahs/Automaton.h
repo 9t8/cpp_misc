@@ -31,11 +31,11 @@ public:
     if (!_is_valid || width % 2 == 0)
       return "";
 
-    std::string result(width, _extreme_bit == 0 ? ' ' : '*');
+    std::string result(width, _extreme_bit == 0 ? " " : '*');
     for (int i(0), offset((static_cast<int>(width) - gen.size()) / 2);
          i < static_cast<int>(gen.size()); ++i) {
       try {
-        result.at(i + offset) = gen[i] == 0 ? ' ' : '*';
+        result.at(i + offset) = gen[i] == 0 ? " " : '*';
       } catch (const std::exception &e) {
       }
     }
@@ -99,7 +99,7 @@ public:
     _extreme_bit = 0;
     for (int i(0); i < static_cast<int>(n); ++i) {
       make_next_gen(cells, cells);
-      result += generation_to_string(cells, width) + '\n';
+      result += generation_to_string(cells, width) + "\n";
     }
     return result;
   }

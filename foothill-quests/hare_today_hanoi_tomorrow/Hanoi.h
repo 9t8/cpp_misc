@@ -37,7 +37,7 @@ private:
     if (static_cast<int>(_cache[num_discs][src].size()) <= dst)
       _cache[num_discs][src].resize(dst + 1);
 
-    if (_cache[num_discs][src][dst] == "")
+    if (_cache[num_discs][src][dst].empty())
       _cache[num_discs][src][dst] =
           get_moves(num_discs - 1, src, tmp, dst) + std::to_string(src) + "->" +
           std::to_string(dst) + "\n" + get_moves(num_discs - 1, tmp, dst, src);

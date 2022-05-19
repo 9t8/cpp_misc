@@ -31,7 +31,7 @@ struct Trie {
 
     for (int i(0);
          i < static_cast<long long>(std::min(limit, completions.size())); ++i)
-      result += completions[i] + '\n';
+      result += completions[i] + "\n";
 
     if (completions.size() > limit)
       result += "...\n";

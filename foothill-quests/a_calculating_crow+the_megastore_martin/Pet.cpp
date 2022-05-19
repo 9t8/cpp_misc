@@ -52,7 +52,7 @@ string Pet::to_string() const {
 string Pet::get_name() const { return _name; }
 
 bool Pet::set_name(string name) {
-  if (name == "")
+  if (name.empty())
     return false;
 
   _name = name;
