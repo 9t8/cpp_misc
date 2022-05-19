@@ -202,14 +202,12 @@ int main() {
   gen_contradictions(soluble_evi, insol_evi, contradictions);
   std::cout << "contradictions\n";
   for (const auto &contradiction : contradictions) {
-    std::cout << "\n"
-                 "===-- "
-              << contradiction
+    std::cout << "\n===-- " << contradiction
               << " --===\n"
-                 "soluble_evi:"
+                 "soluble evidence:"
               << soluble_evi[contradiction.first][contradiction.second]
               << "\n"
-                 "insol_evi:"
+                 "insoluble evidence:"
               << insol_evi[contradiction.first][contradiction.second] << "\n";
   }
   std::cout << "\n";
