@@ -106,26 +106,34 @@ void gen_mix_list(std::deque<mix> &mixes) {
   table_to_list(s3_rows, s3_cols, s3_data, mixes);
 }
 
-void gen_sol_evi(const std::deque<mix> &mixes, evidence_table &soluble) {
+void gen_soluble_evi(const std::deque<mix> &mixes,
+                     evidence_table &soluble_evi) {
   for (size_t i{1}; i < mixes.size(); ++i) {
     const mix &curr_mix{mixes[i]};
     if (!curr_mix.p) {
-      soluble[curr_mix.s0.first][curr_mix.s0.second].push_back(i);
-      soluble[curr_mix.s0.first][curr_mix.s1.second].push_back(i);
-      soluble[curr_mix.s1.first][curr_mix.s0.second].push_back(i);
-      soluble[curr_mix.s1.first][curr_mix.s1.second].push_back(i);
+      soluble_evi[curr_mix.s0.first][curr_mix.s0.second].push_back(i);
+      soluble_evi[curr_mix.s0.first][curr_mix.s1.second].push_back(i);
+      soluble_evi[curr_mix.s1.first][curr_mix.s0.second].push_back(i);
+      soluble_evi[curr_mix.s1.first][curr_mix.s1.second].push_back(i);
     }
   }
 }
+
+void gen_insol_evi(const std::deque<mix> &mixes,
+                   const evidence_table &soluble_evi,
+                   evidence_table &insol_evi) {}
 
 int main() {
   std::deque<mix> mixes;
   gen_mix_list(mixes);
 
-  evidence_table soluble;
-  gen_sol_evi(mixes, soluble);
+  evidence_table soluble_evi;
+  gen_soluble_evi(mixes, soluble_evi);
+  std::cout << "soluble_evi:\n" << soluble_evi;
 
-  std::cout << soluble;
+  evidence_table insol_evi;
+  gen_insol_evi(mixes, soluble_evi, insol_evi);
+  std::cout << "insol_evi:\n" << insol_evi;
 
   std::cout << "DONE\n";
 }
