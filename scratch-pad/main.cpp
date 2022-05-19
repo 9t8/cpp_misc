@@ -26,13 +26,24 @@ enum an { no3, cl, i, po4, cro4, oh, br, co3, so4, c2o4, c2h3o2, num_ans };
 
 using compound = std::pair<const cat, const an>;
 
-using evidence_table =
-    std::array<std::array<std::deque<int>, num_ans>, num_cats>;
-
 struct mix {
   const compound s0, s1;
   const bool p;
 };
+
+using evidence_table =
+    std::array<std::array<std::deque<int>, num_ans>, num_cats>;
+
+std::ostream &operator<<(std::ostream &os, const evidence_table &t) {
+  for (const auto &row : t) {
+    for (const auto &cell : row) {
+      os.width(4);
+      os << cell.size();
+    }
+    os << '\n';
+  }
+  return os;
+}
 
 void table_to_list(const std::vector<compound> &rows,
                    const std::vector<compound> &cols,
@@ -114,13 +125,7 @@ int main() {
   evidence_table sol_evi;
   gen_sol_evi(mixes, sol_evi);
 
-  for (const auto &row : sol_evi) {
-    for (const auto &cell : row) {
-      std::cout.width(4);
-      std::cout << cell.size();
-    }
-    std::cout << "\n";
-  }
+  std::cout << sol_evi;
 
   std::cout << "DONE\n";
 }
