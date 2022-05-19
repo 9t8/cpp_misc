@@ -20,7 +20,7 @@ using compound = std::pair<const cat, const an>;
 
 struct mix {
   const compound s0, s1;
-  const bool p;
+  bool p;
 };
 
 using evidence_table =
@@ -144,44 +144,59 @@ void gen_mix_list(std::deque<mix> &mixes) {
   table_to_list(s3_rows, s3_cols, s3_data, mixes);
 }
 
-void gen_soluble_evi(const std::deque<mix> &mixes,
-                     evidence_table &soluble_evi) {
+void gen_soluble_ev(const std::deque<mix> &mixes, evidence_table &soluble_ev) {
   for (size_t i{1}; i < mixes.size(); ++i) {
     if (!mixes[i].p) {
-      soluble_evi[mixes[i].s0.first][mixes[i].s0.second].push_back(i);
-      soluble_evi[mixes[i].s0.first][mixes[i].s1.second].push_back(i);
-      soluble_evi[mixes[i].s1.first][mixes[i].s0.second].push_back(i);
-      soluble_evi[mixes[i].s1.first][mixes[i].s1.second].push_back(i);
+      soluble_ev[mixes[i].s0.first][mixes[i].s0.second].push_back(i);
+      soluble_ev[mixes[i].s0.first][mixes[i].s1.second].push_back(i);
+      soluble_ev[mixes[i].s1.first][mixes[i].s0.second].push_back(i);
+      soluble_ev[mixes[i].s1.first][mixes[i].s1.second].push_back(i);
     }
   }
 }
 
 // TODO: maybe push more evidence: take advantage of delim
-void gen_insol_evi(const std::deque<mix> &mixes,
-                   const evidence_table &soluble_evi,
-                   evidence_table &insol_evi) {
+void gen_insol_ev(const std::deque<mix> &mixes,
+                  const evidence_table &soluble_ev, evidence_table &insol_ev) {
   for (size_t i{1}; i < mixes.size(); ++i) {
     if (mixes[i].p) {
-      if (!soluble_evi[mixes[i].s0.first][mixes[i].s1.second].empty()) {
-        insol_evi[mixes[i].s1.first][mixes[i].s0.second].push_back(i);
+      if (!soluble_ev[mixes[i].s0.first][mixes[i].s1.second].empty()) {
+        insol_ev[mixes[i].s1.first][mixes[i].s0.second].push_back(i);
       }
-      if (!soluble_evi[mixes[i].s1.first][mixes[i].s0.second].empty()) {
-        insol_evi[mixes[i].s0.first][mixes[i].s1.second].push_back(i);
+      if (!soluble_ev[mixes[i].s1.first][mixes[i].s0.second].empty()) {
+        insol_ev[mixes[i].s0.first][mixes[i].s1.second].push_back(i);
       }
     }
   }
 }
 
-void gen_contradictions(const evidence_table &soluble_evi,
-                        const evidence_table &insol_evi,
+void gen_contradictions(const evidence_table &soluble_ev,
+                        const evidence_table &insol_ev,
                         std::deque<compound> &contradictions) {
   for (int i{0}; i < num_cats; ++i) {
     for (int j{0}; j < num_ans; ++j) {
-      if (!soluble_evi[i][j].empty() && !insol_evi[i][j].empty()) {
+      if (!soluble_ev[i][j].empty() && !insol_ev[i][j].empty()) {
         contradictions.push_back({static_cast<cat>(i), static_cast<an>(j)});
       }
     }
   }
+}
+
+int find_worst_mix(const std::deque<compound> &contradictions,
+                   const evidence_table &soluble_ev,
+                   const evidence_table &insol_ev, const size_t &sz_mixes) {
+  std::vector<int> trouble_count(sz_mixes);
+  for (const auto &contradiction : contradictions) {
+    for (const auto &mix_num :
+         soluble_ev[contradiction.first][contradiction.second])
+      ++trouble_count[mix_num];
+
+    for (const auto &mix_num :
+         insol_ev[contradiction.first][contradiction.second])
+      ++trouble_count[mix_num];
+  }
+  return std::max_element(trouble_count.begin(), trouble_count.end()) -
+         trouble_count.begin();
 }
 
 //===-- main --===
@@ -190,27 +205,28 @@ int main() {
   std::deque<mix> mixes;
   gen_mix_list(mixes);
 
-  evidence_table soluble_evi;
-  gen_soluble_evi(mixes, soluble_evi);
-  std::cout << "# rxns supporting solubility\n" << soluble_evi << "\n";
+  evidence_table soluble_ev;
+  gen_soluble_ev(mixes, soluble_ev);
 
-  evidence_table insol_evi;
-  gen_insol_evi(mixes, soluble_evi, insol_evi);
-  std::cout << "# rxns supporting insolubility\n" << insol_evi << "\n";
+  evidence_table insol_ev;
+  gen_insol_ev(mixes, soluble_ev, insol_ev);
 
   std::deque<compound> contradictions;
-  gen_contradictions(soluble_evi, insol_evi, contradictions);
-  std::cout << "contradictions\n";
+  gen_contradictions(soluble_ev, insol_ev, contradictions);
+
+  if (contradictions.empty()) {
+    return 0;
+  }
+
   for (const auto &contradiction : contradictions) {
-    std::cout << "\n===-- " << contradiction
+    std::cout << "===-- " << contradiction
               << " --===\n"
                  "soluble evidence:"
-              << soluble_evi[contradiction.first][contradiction.second]
+              << soluble_ev[contradiction.first][contradiction.second]
               << "\n"
                  "insoluble evidence:"
-              << insol_evi[contradiction.first][contradiction.second] << "\n";
+              << insol_ev[contradiction.first][contradiction.second] << "\n\n";
   }
-  std::cout << "\n";
 
   std::cout << "DONE\n";
 }
