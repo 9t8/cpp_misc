@@ -37,7 +37,7 @@ using evidence_table =
 std::ostream &operator<<(std::ostream &os, const evidence_table &t) {
   for (const auto &row : t) {
     for (const auto &cell : row) {
-      os.width(4);
+      os.width(8);
       os << cell.size();
     }
     os << '\n';
@@ -106,14 +106,14 @@ void gen_mix_list(std::deque<mix> &mixes) {
   table_to_list(s3_rows, s3_cols, s3_data, mixes);
 }
 
-void gen_sol_evi(const std::deque<mix> &mixes, evidence_table &sol_evi) {
+void gen_sol_evi(const std::deque<mix> &mixes, evidence_table &soluble) {
   for (size_t i{1}; i < mixes.size(); ++i) {
     const mix &curr_mix{mixes[i]};
     if (!curr_mix.p) {
-      sol_evi[curr_mix.s0.first][curr_mix.s0.second].push_back(i);
-      sol_evi[curr_mix.s0.first][curr_mix.s1.second].push_back(i);
-      sol_evi[curr_mix.s1.first][curr_mix.s0.second].push_back(i);
-      sol_evi[curr_mix.s1.first][curr_mix.s1.second].push_back(i);
+      soluble[curr_mix.s0.first][curr_mix.s0.second].push_back(i);
+      soluble[curr_mix.s0.first][curr_mix.s1.second].push_back(i);
+      soluble[curr_mix.s1.first][curr_mix.s0.second].push_back(i);
+      soluble[curr_mix.s1.first][curr_mix.s1.second].push_back(i);
     }
   }
 }
@@ -122,10 +122,10 @@ int main() {
   std::deque<mix> mixes;
   gen_mix_list(mixes);
 
-  evidence_table sol_evi;
-  gen_sol_evi(mixes, sol_evi);
+  evidence_table soluble;
+  gen_sol_evi(mixes, soluble);
 
-  std::cout << sol_evi;
+  std::cout << soluble;
 
   std::cout << "DONE\n";
 }
