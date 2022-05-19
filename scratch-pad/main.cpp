@@ -83,7 +83,7 @@ const std::vector<std::vector<bool>> s3_data{ // SET 3
 };
 // clang-format on
 
-//===-- printing fns --===
+//===-- logging fns --===
 
 std::ostream &operator<<(std::ostream &os, const cat &c) {
   return os << cat_names.at(c);
