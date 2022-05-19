@@ -114,12 +114,11 @@ void gen_mix_list(std::deque<mix> &mixes) {
 void gen_soluble_evi(const std::deque<mix> &mixes,
                      evidence_table &soluble_evi) {
   for (size_t i{1}; i < mixes.size(); ++i) {
-    const mix &curr_mix{mixes[i]};
-    if (!curr_mix.p) {
-      soluble_evi[curr_mix.s0.first][curr_mix.s0.second].push_back(i);
-      soluble_evi[curr_mix.s0.first][curr_mix.s1.second].push_back(i);
-      soluble_evi[curr_mix.s1.first][curr_mix.s0.second].push_back(i);
-      soluble_evi[curr_mix.s1.first][curr_mix.s1.second].push_back(i);
+    if (!mixes[i].p) {
+      soluble_evi[mixes[i].s0.first][mixes[i].s0.second].push_back(i);
+      soluble_evi[mixes[i].s0.first][mixes[i].s1.second].push_back(i);
+      soluble_evi[mixes[i].s1.first][mixes[i].s0.second].push_back(i);
+      soluble_evi[mixes[i].s1.first][mixes[i].s1.second].push_back(i);
     }
   }
 }
