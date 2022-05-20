@@ -207,9 +207,11 @@ int main() {
 
   evidence_table soluble_ev;
   gen_soluble_ev(mixes, soluble_ev);
+  std::cout << soluble_ev << "\n";
 
   evidence_table insol_ev;
   gen_insol_ev(mixes, soluble_ev, insol_ev);
+  std::cout << insol_ev << "\n";
 
   std::deque<compound> contradictions;
   gen_contradictions(soluble_ev, insol_ev, contradictions);
