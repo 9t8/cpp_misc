@@ -8,13 +8,14 @@ enum cat { ag, ca, cu, fe, sr, zn, pb, mn, al, ba, k, mg, na, nh4, sn, cr, co, n
 
 const std::array<std::string, num_cats> cat_names = {
     "ag", "ca", "cu", "fe", "sr",  "zn", "pb", "mn", "al",
-    "ba", "k",  "mg", "na", "nh4", "sn", "cr", "co", "ni"};
+    "ba", "k",  "mg", "na", "nh4", "sn", "cr", "co", "ni",
+};
 
 enum an { no3, cl, i, po4, cro4, oh, br, co3, so4, c2o4, c2h3o2, num_ans };
 
 const std::array<std::string, num_ans> an_names = {
-    "no3", "cl",  "i",   "po4",  "cro4",  "oh",
-    "br",  "co3", "so4", "c2o4", "c2h3o2"};
+    "no3", "cl", "i", "po4", "cro4", "oh", "br", "co3", "so4", "c2o4", "c2h3o2",
+};
 
 using compound = std::pair<const cat, const an>;
 
@@ -31,13 +32,16 @@ using evidence_table =
 const std::vector<compound> s1_rows{
     {al, cl}, {ba, cl},  {k, i},     {k, po4},  {k, cro4},  {mg, cl},
     {na, oh}, {na, br},  {nh4, co3}, {na, so4}, {na, c2o4}, {na, c2h3o2},
-    {sn, cl}, {cr, so4}, {co, cl},   {ni, cl}};
+    {sn, cl}, {cr, so4}, {co, cl},   {ni, cl},
+};
 
-const std::vector<compound> s1_cols{{ag, no3}, {ca, no3}, {cu, no3}, {fe, no3},
-                                    {sr, no3}, {zn, no3}, {pb, no3}, {mn, no3}};
+const std::vector<compound> s1_cols{
+    {ag, no3}, {ca, no3}, {cu, no3}, {fe, no3},
+    {sr, no3}, {zn, no3}, {pb, no3}, {mn, no3},
+};
 
 // clang-format off
-const std::vector<std::vector<bool>> s1_data{ // SET 1
+const std::vector<std::vector<bool>> s1_data{
     {1, 0, 0, 0, 0, 0, 0, 0},
     {1, 0, 0, 0, 0, 0, 1, 1},
     {1, 0, 1, 1, 0, 0, 1, 1},
@@ -62,7 +66,7 @@ const std::vector<compound> s2_rows{
 
 const std::vector<compound> s2_cols{{k, cro4}, {k, i}, {k, po4}, {nh4, co3}};
 
-const std::vector<std::vector<bool>> s2_data(5, std::vector(4, false)); // SET 2
+const std::vector<std::vector<bool>> s2_data(5, std::vector(4, false));
 
 const std::vector<compound> s3_rows{{al, cl}, {ba, cl}, {mg, cl}, {sn, cl},
                                     {co, cl}, {ni, cl}, {cr, so4}};
@@ -72,7 +76,7 @@ const std::vector<compound> s3_cols{{k, cro4},  {k, i},       {k, po4},
                                     {na, c2o4}, {na, c2h3o2}, {nh4, co3}};
 
 // clang-format off
-const std::vector<std::vector<bool>> s3_data{ // SET 3
+const std::vector<std::vector<bool>> s3_data{
     {1, 0, 1, 0, 1, 0, 0, 0, 0},
     {1, 0, 1, 1, 1, 0, 1, 0, 1},
     {0, 0, 1, 0, 1, 0, 0, 0, 0},
