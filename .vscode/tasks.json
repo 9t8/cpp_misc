@@ -11,7 +11,7 @@
 				"${fileDirname}/**.cpp",
 				"-o",
 				"${workspaceFolder}/build.exe",
-				"-std=c++17",
+				"-std=c++11",
 				"-pedantic",
 				"-Wall",
 				"-Wextra",
