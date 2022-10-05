@@ -66,7 +66,7 @@ const std::vector<compound> s2_rows{
 
 const std::vector<compound> s2_cols{{k, cro4}, {k, i}, {k, po4}, {nh4, co3}};
 
-const std::vector<std::vector<bool>> s2_data(5, std::vector(4, false));
+const std::vector<std::vector<bool>> s2_data(5, std::vector<bool>(4, false));
 
 const std::vector<compound> s3_rows{{al, cl}, {ba, cl}, {mg, cl}, {sn, cl},
                                     {co, cl}, {ni, cl}, {cr, so4}};
