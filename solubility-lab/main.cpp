@@ -110,14 +110,14 @@ std::ostream &operator<<(std::ostream &os, const std::deque<int> &di) {
 
 std::ostream &operator<<(std::ostream &os, const evidence_table &t) {
   os << "\t";
-  for (int i{0}; i < num_ans; ++i)
+  for (int i(0); i < num_ans; ++i)
     os << std::setw(8) << an_names[i];
 
   os << "\n";
 
-  for (int i{0}; i < num_cats; ++i) {
+  for (int i(0); i < num_cats; ++i) {
     os << std::setw(8) << cat_names[i];
-    for (int j{0}; j < num_ans; ++j)
+    for (int j(0); j < num_ans; ++j)
       os << std::setw(8) << t[i][j].size();
 
     os << "\n";
@@ -132,8 +132,8 @@ void table_to_list(const std::vector<compound> &rows,
                    const std::vector<compound> &cols,
                    const std::vector<std::vector<bool>> &table,
                    std::deque<mix> &list) {
-  for (size_t row{}; row < rows.size(); ++row) {
-    for (size_t col{}; col < cols.size(); ++col) {
+  for (size_t row(0); row < rows.size(); ++row) {
+    for (size_t col(0); col < cols.size(); ++col) {
       if (rows[row].first != cols[col].first &&
           rows[row].second != cols[col].second)
         list.push_back({rows[row], cols[col], table[row][col]});
@@ -149,7 +149,7 @@ void gen_mix_list(std::deque<mix> &mixes) {
 }
 
 void gen_soluble_ev(const std::deque<mix> &mixes, evidence_table &soluble_ev) {
-  for (size_t i{1}; i < mixes.size(); ++i) {
+  for (size_t i(1); i < mixes.size(); ++i) {
     if (!mixes[i].p) {
       soluble_ev[mixes[i].s0.first][mixes[i].s0.second].push_back(i);
       soluble_ev[mixes[i].s0.first][mixes[i].s1.second].push_back(i);
@@ -162,7 +162,7 @@ void gen_soluble_ev(const std::deque<mix> &mixes, evidence_table &soluble_ev) {
 // TODO: maybe push more evidence: take advantage of delim
 void gen_insol_ev(const std::deque<mix> &mixes,
                   const evidence_table &soluble_ev, evidence_table &insol_ev) {
-  for (size_t i{1}; i < mixes.size(); ++i) {
+  for (size_t i(1); i < mixes.size(); ++i) {
     if (mixes[i].p) {
       if (!soluble_ev[mixes[i].s0.first][mixes[i].s1.second].empty()) {
         insol_ev[mixes[i].s1.first][mixes[i].s0.second].push_back(i);
@@ -177,8 +177,8 @@ void gen_insol_ev(const std::deque<mix> &mixes,
 void gen_contradictions(const evidence_table &soluble_ev,
                         const evidence_table &insol_ev,
                         std::deque<compound> &contradictions) {
-  for (int i{0}; i < num_cats; ++i) {
-    for (int j{0}; j < num_ans; ++j) {
+  for (int i(0); i < num_cats; ++i) {
+    for (int j(0); j < num_ans; ++j) {
       if (!soluble_ev[i][j].empty() && !insol_ev[i][j].empty()) {
         contradictions.push_back({static_cast<cat>(i), static_cast<an>(j)});
       }

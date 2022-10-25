@@ -17,7 +17,7 @@ struct end_list : public token {
 };
 
 struct fp_token : public token {
-  fp_token(const double &v) : token{}, val{v} {}
+  fp_token(const double &v) : token(), val(v) {}
 
   virtual operator std::string() const { return std::to_string(val); }
 
@@ -29,7 +29,7 @@ struct datum {
 };
 
 struct fp_datum : public datum {
-  fp_datum(const double &v) : datum{}, val{v} {}
+  fp_datum(const double &v) : datum(), val(v) {}
 
   virtual void eval() {}
 
@@ -51,17 +51,17 @@ void lex(std::istream &in, std::deque<std::unique_ptr<token>> &tokens) {
 
     if (in.peek() == '(') {
       in.get();
-      tokens.push_back(std::unique_ptr<begin_list>{new begin_list});
+      tokens.push_back(std::unique_ptr<begin_list>(new begin_list));
       continue;
     }
     if (in.peek() == ')') {
       in.get();
-      tokens.push_back(std::unique_ptr<end_list>{new end_list});
+      tokens.push_back(std::unique_ptr<end_list>(new end_list));
       continue;
     }
     double val;
     in >> val;
-    tokens.push_back(std::unique_ptr<fp_token>{new fp_token{val}});
+    tokens.push_back(std::unique_ptr<fp_token>(new fp_token(val)));
   }
 }
 
@@ -76,14 +76,14 @@ void parse(std::deque<std::unique_ptr<token>> &tokens, list &l) {
     if (typeid(tokens.front()) == typeid(begin_list)) {
       tokens.pop_front();
       l.elements.push_back(
-          std::unique_ptr<list>{std::unique_ptr<list>{new list}});
+          std::unique_ptr<list>(std::unique_ptr<list>(new list)));
       parse(tokens, dynamic_cast<list &>(*l.elements.back()));
 
       break;
     }
 
-    l.elements.push_back(std::unique_ptr<fp_datum>{
-        new fp_datum{dynamic_cast<fp_token &>(*tokens.front()).val}});
+    l.elements.push_back(std::unique_ptr<fp_datum>(
+        new fp_datum(dynamic_cast<fp_token &>(*tokens.front()).val)));
     l.elements.pop_front();
   }
   throw;
