@@ -119,12 +119,14 @@ int main() {
   lex(std::cin, tokens);
 
   for (const std::unique_ptr<token> &t : tokens) {
-    std::cout << *t << "\n";
+    std::cerr << *t << "\n";
   }
 
   list l;
   tokens.push_front(std::unique_ptr<begin_list>(new begin_list));
   tokens.push_back(std::unique_ptr<end_list>(new end_list));
   parse(tokens, l);
-  assert(tokens.empty() && "too many closing parens!");
+  assert(tokens.empty() && "unexpected closing parens!");
+
+  std::cerr << "done\n";
 }
