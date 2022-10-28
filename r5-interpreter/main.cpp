@@ -67,21 +67,19 @@ struct list : public datum {
 
 // should destroy everything in tokens
 void parse(std::deque<std::unique_ptr<token>> &tokens, list &l) {
-  assert(typeid(*tokens.front()) == typeid(begin_list) &&
-         "first element not open paren!");
+  assert(tokens.size() >= 2 && typeid(*tokens.front()) == typeid(begin_list) &&
+         "not a list!");
   tokens.pop_front();
 
-  while (!tokens.empty()) {
+  // fixme: check for element before accessing
+  while (typeid(*tokens.front()) != typeid(end_list)) {
+    assert(!tokens.empty() && "missing closing paren!");
+
     if (typeid(*tokens.front()) == typeid(begin_list)) {
       l.elements.push_back(std::unique_ptr<list>(new list));
       parse(tokens, dynamic_cast<list &>(*l.elements.back()));
 
-      break;
-    }
-
-    if (typeid(*tokens.front()) == typeid(end_list)) {
-      tokens.pop_front();
-      return;
+      continue;
     }
 
     l.elements.push_back(std::unique_ptr<fp_datum>(
@@ -89,7 +87,7 @@ void parse(std::deque<std::unique_ptr<token>> &tokens, list &l) {
     tokens.pop_front();
   }
 
-  assert(0 && "missing closing paren!");
+  tokens.pop_front();
 }
 
 int main() {
