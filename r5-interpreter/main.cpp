@@ -67,13 +67,17 @@ struct list : public datum {
 
 // should destroy everything in tokens
 void parse(std::deque<std::unique_ptr<token>> &tokens, list &l) {
-  assert(tokens.size() >= 2 && typeid(*tokens.front()) == typeid(begin_list) &&
+  assert(!tokens.empty() && typeid(*tokens.front()) == typeid(begin_list) &&
          "not a list!");
   tokens.pop_front();
 
-  // fixme: check for element before accessing
-  while (typeid(*tokens.front()) != typeid(end_list)) {
+  for (;;) {
     assert(!tokens.empty() && "missing closing paren!");
+
+    if (typeid(*tokens.front()) == typeid(end_list)) {
+      tokens.pop_front();
+      return;
+    }
 
     if (typeid(*tokens.front()) == typeid(begin_list)) {
       l.elements.push_back(std::unique_ptr<list>(new list));
@@ -86,9 +90,29 @@ void parse(std::deque<std::unique_ptr<token>> &tokens, list &l) {
         new fp_datum(dynamic_cast<const fp_token &>(*tokens.front()).val)));
     tokens.pop_front();
   }
-
-  tokens.pop_front();
 }
+
+// // destroys tokens
+// void parse(std::deque<std::unique_ptr<token>> &tokens, list &l) {
+//   for (;; tokens.pop_front()) {
+//     assert(!tokens.empty() && "missing closing paren!");
+
+//     if (typeid(*tokens.front()) == typeid(end_list)) {
+//       return;
+//     }
+
+//     if (typeid(*tokens.front()) == typeid(begin_list)) {
+//       l.elements.push_back(std::unique_ptr<list>(new list));
+//       tokens.pop_front();
+//       parse(tokens, dynamic_cast<list &>(*l.elements.back()));
+
+//       continue;
+//     }
+
+//     l.elements.push_back(std::unique_ptr<fp_datum>(
+//         new fp_datum(dynamic_cast<const fp_token &>(*tokens.front()).val)));
+//   }
+// }
 
 int main() {
   std::deque<std::unique_ptr<token>> tokens;
