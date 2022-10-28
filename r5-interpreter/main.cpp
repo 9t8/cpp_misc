@@ -51,6 +51,10 @@ void lex(std::istream &in, std::deque<std::unique_ptr<token>> &tokens) {
 
 struct datum {
   virtual operator std::string() const = 0;
+
+  friend std::ostream &operator<<(std::ostream &os, const datum &d) {
+    return os << static_cast<std::string>(d);
+  }
 };
 
 struct fp_datum : public datum {
@@ -66,7 +70,7 @@ struct list : public datum {
     std::ostringstream oss;
     oss << "(\n";
     for (const auto &e : elements) {
-      oss << static_cast<std::string>(*e);
+      oss << *e;
     }
     oss << ")\n";
     return oss.str();
@@ -75,27 +79,27 @@ struct list : public datum {
   std::deque<std::unique_ptr<datum>> elements;
 };
 
-void parse(std::deque<std::unique_ptr<token>> &tokens, list &l) {
+std::unique_ptr<datum> parse(std::deque<std::unique_ptr<token>> &tokens) {
   assert(!tokens.empty() && "expected a token but none found");
 
   assert(typeid(*tokens.front()) != typeid(end_list) &&
          "unexpected closing paren");
 
   if (typeid(*tokens.front()) == typeid(begin_list)) {
+    std::unique_ptr<list> p_list(new list);
     tokens.pop_front();
-    l.elements.push_back(std::unique_ptr<list>(new list));
     while (typeid(*tokens.front()) != typeid(end_list)) {
-      parse(tokens, dynamic_cast<list &>(*l.elements.back()));
+      p_list->elements.push_back(parse(tokens));
     }
     tokens.pop_front();
-    return;
+    return p_list;
   }
 
   if (typeid(*tokens.front()) == typeid(fp_token)) {
-    l.elements.push_back(std::unique_ptr<fp_datum>(
-        new fp_datum(dynamic_cast<const fp_token &>(*tokens.front()).val)));
+    std::unique_ptr<fp_datum> p_fp(
+        new fp_datum(dynamic_cast<const fp_token &>(*tokens.front()).val));
     tokens.pop_front();
-    return;
+    return p_fp;
   }
 }
 
@@ -103,11 +107,10 @@ int main() {
   std::deque<std::unique_ptr<token>> tokens;
   lex(std::cin, tokens);
 
-  list l;
   tokens.push_front(std::unique_ptr<begin_list>(new begin_list));
   tokens.push_back(std::unique_ptr<end_list>(new end_list));
-  parse(tokens, l);
-  assert(tokens.empty() && "unexpected closing paren");
+  std::unique_ptr<datum> p_ast(parse(tokens));
+  assert(tokens.empty() && "unexpected token");
 
-  std::cerr << static_cast<std::string>(l);
+  std::cerr << *p_ast;
 }
