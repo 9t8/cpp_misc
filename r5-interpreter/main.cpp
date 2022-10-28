@@ -126,7 +126,7 @@ int main() {
   tokens.push_front(std::unique_ptr<begin_list>(new begin_list));
   tokens.push_back(std::unique_ptr<end_list>(new end_list));
   parse(tokens, l);
-  assert(tokens.empty() && "unexpected closing parens!");
+  assert(tokens.empty() && "unexpected closing paren!");
 
   std::cerr << "done\n";
 }
