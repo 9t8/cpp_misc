@@ -1,3 +1,8 @@
 #include <bits/stdc++.h>
 
-int main() { std::cout << "hello, world\n"; }
+using ll = long long;
+
+int main() {
+  std::cin.tie(nullptr)->sync_with_stdio(false);
+  std::cout << "hello, world\n";
+}
