@@ -24,24 +24,6 @@ struct fp_token : public token {
   double val;
 };
 
-struct datum {
-  virtual void eval() = 0;
-};
-
-struct fp_datum : public datum {
-  fp_datum(const double &v) : datum(), val(v) {}
-
-  virtual void eval() {}
-
-  double val;
-};
-
-struct list : public datum {
-  virtual void eval() {}
-
-  std::deque<std::unique_ptr<datum>> elements;
-};
-
 void lex(std::istream &in, std::deque<std::unique_ptr<token>> &tokens) {
   for (;;) {
     in >> std::ws;
@@ -65,37 +47,62 @@ void lex(std::istream &in, std::deque<std::unique_ptr<token>> &tokens) {
   }
 }
 
-// destroys tokens
-void parse(std::deque<std::unique_ptr<token>> &tokens, list &l) {
-  while (!tokens.empty()) {
-    if (typeid(tokens.front()) == typeid(end_list)) {
-      tokens.pop_front();
-      return;
-    }
+struct datum {
+  virtual void eval() = 0;
+};
 
-    if (typeid(tokens.front()) == typeid(begin_list)) {
-      tokens.pop_front();
-      l.elements.push_back(
-          std::unique_ptr<list>(std::unique_ptr<list>(new list)));
+struct fp_datum : public datum {
+  fp_datum(const double &v) : datum(), val(v) {}
+
+  virtual void eval() {}
+
+  double val;
+};
+
+struct list : public datum {
+  virtual void eval() {}
+
+  std::deque<std::unique_ptr<datum>> elements;
+};
+
+// should destroy everything in tokens
+void parse(std::deque<std::unique_ptr<token>> &tokens, list &l) {
+  assert(typeid(*tokens.front()) == typeid(begin_list) &&
+         "first element not open paren!");
+  tokens.pop_front();
+
+  while (!tokens.empty()) {
+    if (typeid(*tokens.front()) == typeid(begin_list)) {
+      l.elements.push_back(std::unique_ptr<list>(new list));
       parse(tokens, dynamic_cast<list &>(*l.elements.back()));
 
       break;
     }
 
+    if (typeid(*tokens.front()) == typeid(end_list)) {
+      tokens.pop_front();
+      return;
+    }
+
     l.elements.push_back(std::unique_ptr<fp_datum>(
-        new fp_datum(dynamic_cast<fp_token &>(*tokens.front()).val)));
-    l.elements.pop_front();
+        new fp_datum(dynamic_cast<const fp_token &>(*tokens.front()).val)));
+    tokens.pop_front();
   }
-  throw;
+
+  assert(0 && "missing closing paren!");
 }
 
 int main() {
   std::deque<std::unique_ptr<token>> tokens;
   lex(std::cin, tokens);
 
-  for (const std::unique_ptr<token> &t : tokens)
+  for (const std::unique_ptr<token> &t : tokens) {
     std::cout << *t << "\n";
+  }
 
   list l;
+  tokens.push_front(std::unique_ptr<begin_list>(new begin_list));
+  tokens.push_back(std::unique_ptr<end_list>(new end_list));
   parse(tokens, l);
+  assert(tokens.empty() && "too many closing parens!");
 }
