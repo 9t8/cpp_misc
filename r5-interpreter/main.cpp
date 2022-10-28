@@ -36,11 +36,13 @@ void lex(std::istream &in, std::deque<std::unique_ptr<token>> &tokens) {
       tokens.push_back(std::unique_ptr<begin_list>(new begin_list));
       continue;
     }
+
     if (in.peek() == ')') {
       in.get();
       tokens.push_back(std::unique_ptr<end_list>(new end_list));
       continue;
     }
+
     double val;
     in >> val;
     tokens.push_back(std::unique_ptr<fp_token>(new fp_token(val)));
@@ -48,85 +50,64 @@ void lex(std::istream &in, std::deque<std::unique_ptr<token>> &tokens) {
 }
 
 struct datum {
-  virtual void eval() = 0;
+  virtual operator std::string() const = 0;
 };
 
 struct fp_datum : public datum {
   fp_datum(const double &v) : datum(), val(v) {}
 
-  virtual void eval() {}
+  virtual operator std::string() const { return std::to_string(val) + "\n"; }
 
   double val;
 };
 
 struct list : public datum {
-  virtual void eval() {}
+  virtual operator std::string() const {
+    std::ostringstream oss;
+    oss << "(\n";
+    for (const auto &e : elements) {
+      oss << static_cast<std::string>(*e);
+    }
+    oss << ")\n";
+    return oss.str();
+  }
 
   std::deque<std::unique_ptr<datum>> elements;
 };
 
-// should destroy everything in tokens
 void parse(std::deque<std::unique_ptr<token>> &tokens, list &l) {
-  assert(!tokens.empty() && typeid(*tokens.front()) == typeid(begin_list) &&
-         "not a list!");
-  tokens.pop_front();
+  assert(!tokens.empty() && "expected a token but none found");
 
-  for (;;) {
-    assert(!tokens.empty() && "missing closing paren!");
+  assert(typeid(*tokens.front()) != typeid(end_list) &&
+         "unexpected closing paren");
 
-    if (typeid(*tokens.front()) == typeid(end_list)) {
-      tokens.pop_front();
-      return;
-    }
-
-    if (typeid(*tokens.front()) == typeid(begin_list)) {
-      l.elements.push_back(std::unique_ptr<list>(new list));
+  if (typeid(*tokens.front()) == typeid(begin_list)) {
+    tokens.pop_front();
+    l.elements.push_back(std::unique_ptr<list>(new list));
+    while (typeid(*tokens.front()) != typeid(end_list)) {
       parse(tokens, dynamic_cast<list &>(*l.elements.back()));
-
-      continue;
     }
+    tokens.pop_front();
+    return;
+  }
 
+  if (typeid(*tokens.front()) == typeid(fp_token)) {
     l.elements.push_back(std::unique_ptr<fp_datum>(
         new fp_datum(dynamic_cast<const fp_token &>(*tokens.front()).val)));
     tokens.pop_front();
+    return;
   }
 }
-
-// // destroys tokens
-// void parse(std::deque<std::unique_ptr<token>> &tokens, list &l) {
-//   for (;; tokens.pop_front()) {
-//     assert(!tokens.empty() && "missing closing paren!");
-
-//     if (typeid(*tokens.front()) == typeid(end_list)) {
-//       return;
-//     }
-
-//     if (typeid(*tokens.front()) == typeid(begin_list)) {
-//       l.elements.push_back(std::unique_ptr<list>(new list));
-//       tokens.pop_front();
-//       parse(tokens, dynamic_cast<list &>(*l.elements.back()));
-
-//       continue;
-//     }
-
-//     l.elements.push_back(std::unique_ptr<fp_datum>(
-//         new fp_datum(dynamic_cast<const fp_token &>(*tokens.front()).val)));
-//   }
-// }
 
 int main() {
   std::deque<std::unique_ptr<token>> tokens;
   lex(std::cin, tokens);
 
-  for (const std::unique_ptr<token> &t : tokens) {
-    std::cerr << *t << "\n";
-  }
-
   list l;
   tokens.push_front(std::unique_ptr<begin_list>(new begin_list));
   tokens.push_back(std::unique_ptr<end_list>(new end_list));
   parse(tokens, l);
-  assert(tokens.empty() && "unexpected closing paren!");
+  assert(tokens.empty() && "unexpected closing paren");
 
-  std::cerr << "done\n";
+  std::cerr << static_cast<std::string>(l);
 }
