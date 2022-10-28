@@ -10,7 +10,7 @@
 				"-ggdb3",
 				"${fileDirname}/**.cpp",
 				"-o",
-				"${workspaceFolder}/build.exe",
+				"${workspaceFolder}/a.exe",
 				"-std=c++11",
 				"-pedantic",
 				"-Wall",
