@@ -1,28 +1,7 @@
+#include "datum.h"
+#include "token.h"
+
 #include <bits/stdc++.h>
-
-struct token {
-  virtual operator std::string() const = 0;
-
-  friend std::ostream &operator<<(std::ostream &os, const token &t) {
-    return os << static_cast<std::string>(t);
-  }
-};
-
-struct begin_list : public token {
-  virtual operator std::string() const { return "BEGIN_LIST"; }
-};
-
-struct end_list : public token {
-  virtual operator std::string() const { return "END_LIST"; }
-};
-
-struct fp_token : public token {
-  fp_token(const double &v) : token(), val(v) {}
-
-  virtual operator std::string() const { return std::to_string(val); }
-
-  double val;
-};
 
 void lex(std::istream &in, std::deque<std::unique_ptr<token>> &tokens) {
   for (;;) {
@@ -49,36 +28,6 @@ void lex(std::istream &in, std::deque<std::unique_ptr<token>> &tokens) {
   }
 }
 
-struct datum {
-  virtual operator std::string() const = 0;
-
-  friend std::ostream &operator<<(std::ostream &os, const datum &d) {
-    return os << static_cast<std::string>(d);
-  }
-};
-
-struct fp_datum : public datum {
-  fp_datum(const double &v) : datum(), val(v) {}
-
-  virtual operator std::string() const { return std::to_string(val) + "\n"; }
-
-  double val;
-};
-
-struct list : public datum {
-  virtual operator std::string() const {
-    std::ostringstream oss;
-    oss << "(\n";
-    for (const auto &e : elements) {
-      oss << *e;
-    }
-    oss << ")\n";
-    return oss.str();
-  }
-
-  std::deque<std::unique_ptr<datum>> elements;
-};
-
 std::unique_ptr<datum> parse(std::deque<std::unique_ptr<token>> &tokens) {
   assert(!tokens.empty() && "expected a token but none found");
 
@@ -101,6 +50,8 @@ std::unique_ptr<datum> parse(std::deque<std::unique_ptr<token>> &tokens) {
     tokens.pop_front();
     return p_fp;
   }
+
+  assert(0 && "unexpected token type");
 }
 
 int main() {
