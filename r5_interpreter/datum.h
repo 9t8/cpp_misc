@@ -11,7 +11,7 @@ struct datum {
   }
 };
 
-struct list : public datum {
+struct list_datum : public datum {
   operator std::string() const override {
     std::ostringstream oss;
     oss << "(\n";
@@ -25,12 +25,20 @@ struct list : public datum {
   std::deque<std::unique_ptr<datum>> elements;
 };
 
-struct fp_datum : public datum {
-  fp_datum(const double &v) : datum(), val(v) {}
+struct dec_datum : public datum {
+  dec_datum(const double &v) : datum(), val(v) {}
 
   operator std::string() const override { return std::to_string(val) + "\n"; }
 
   double val;
+};
+
+struct id_datum : public datum {
+  id_datum(const std::string &n) : name(n) {}
+
+  operator std::string() const override { return name + "\n"; }
+
+  std::string name;
 };
 
 #endif

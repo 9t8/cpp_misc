@@ -3,6 +3,8 @@
 
 #include <bits/stdc++.h>
 
+enum class token_type { none, beginl, endl, id, dec };
+
 struct token {
   virtual operator std::string() const = 0;
 
@@ -11,28 +13,28 @@ struct token {
   }
 };
 
-struct begin_list : public token {
+struct beginl_token : public token {
   operator std::string() const override { return "("; }
 };
 
-struct end_list : public token {
+struct endl_token : public token {
   operator std::string() const override { return ")"; }
 };
 
-struct string_token : public token {
-  string_token(const std::string &v) : val(v) {}
-
-  operator std::string() const override { return "#"; }
-
-  std::string val;
-};
-
-struct fp_token : public token {
-  fp_token(const double &v) : val(v) {}
+struct dec_token : public token {
+  dec_token(const double &v) : val(v) {}
 
   operator std::string() const override { return std::to_string(val); }
 
   double val;
+};
+
+struct id_token : public token {
+  id_token(const std::string &n) : name(n) {}
+
+  operator std::string() const override { return name + "\n"; }
+
+  std::string name;
 };
 
 #endif
