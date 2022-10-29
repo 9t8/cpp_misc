@@ -11,14 +11,6 @@ struct datum {
   }
 };
 
-struct fp_datum : public datum {
-  fp_datum(const double &v) : datum(), val(v) {}
-
-  virtual operator std::string() const { return std::to_string(val) + "\n"; }
-
-  double val;
-};
-
 struct list : public datum {
   virtual operator std::string() const {
     std::ostringstream oss;
@@ -31,6 +23,14 @@ struct list : public datum {
   }
 
   std::deque<std::unique_ptr<datum>> elements;
+};
+
+struct fp_datum : public datum {
+  fp_datum(const double &v) : datum(), val(v) {}
+
+  virtual operator std::string() const { return std::to_string(val) + "\n"; }
+
+  double val;
 };
 
 #endif
