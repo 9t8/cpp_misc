@@ -12,17 +12,25 @@ struct token {
 };
 
 struct begin_list : public token {
-  virtual operator std::string() const { return "BEGIN_LIST"; }
+  operator std::string() const override { return "("; }
 };
 
 struct end_list : public token {
-  virtual operator std::string() const { return "END_LIST"; }
+  operator std::string() const override { return ")"; }
+};
+
+struct string_token : public token {
+  string_token(const std::string &v) : val(v) {}
+
+  operator std::string() const override { return "#"; }
+
+  std::string val;
 };
 
 struct fp_token : public token {
-  fp_token(const double &v) : token(), val(v) {}
+  fp_token(const double &v) : val(v) {}
 
-  virtual operator std::string() const { return std::to_string(val); }
+  operator std::string() const override { return std::to_string(val); }
 
   double val;
 };

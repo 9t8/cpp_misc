@@ -12,7 +12,7 @@ struct datum {
 };
 
 struct list : public datum {
-  virtual operator std::string() const {
+  operator std::string() const override {
     std::ostringstream oss;
     oss << "(\n";
     for (const auto &e : elements) {
@@ -28,7 +28,7 @@ struct list : public datum {
 struct fp_datum : public datum {
   fp_datum(const double &v) : datum(), val(v) {}
 
-  virtual operator std::string() const { return std::to_string(val) + "\n"; }
+  operator std::string() const override { return std::to_string(val) + "\n"; }
 
   double val;
 };
