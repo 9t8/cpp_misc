@@ -3,7 +3,7 @@
 
 #include <bits/stdc++.h>
 
-enum class token_type { none, beginl, endl, id, dec };
+enum class token_type { none, beginl, endl, id, decimal };
 
 struct token {
   virtual operator std::string() const = 0;
@@ -37,4 +37,4 @@ struct id_token : public token {
   std::string name;
 };
 
-#endif
+#endif // NINTY8_MINI_PROJECTS_R5_INTERPRETER_TOKEN_H

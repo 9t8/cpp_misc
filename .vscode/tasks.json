@@ -9,6 +9,8 @@
 				"-fdiagnostics-color=always",
 				"-ggdb3",
 				"${fileDirname}/**.cpp",
+				"-I",
+				"${fileDirname}/../include",
 				"-o",
 				"${workspaceFolder}/a.exe",
 				"-std=c++11",

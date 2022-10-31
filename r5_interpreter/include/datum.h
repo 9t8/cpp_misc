@@ -25,8 +25,8 @@ struct list_datum : public datum {
   std::deque<std::unique_ptr<datum>> elements;
 };
 
-struct dec_datum : public datum {
-  dec_datum(const double &v) : datum(), val(v) {}
+struct decimal_datum : public datum {
+  decimal_datum(const double &v) : datum(), val(v) {}
 
   operator std::string() const override { return std::to_string(val) + "\n"; }
 
@@ -41,4 +41,4 @@ struct id_datum : public datum {
   std::string name;
 };
 
-#endif
+#endif // NINTY8_MINI_PROJECTS_R5_INTERPRETER_DATUM_H
