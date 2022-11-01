@@ -41,4 +41,4 @@ struct id_datum : public datum {
   std::string name;
 };
 
-#endif // NINTY8_MINI_PROJECTS_R5_INTERPRETER_DATUM_H
+#endif // header guard

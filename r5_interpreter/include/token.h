@@ -21,8 +21,8 @@ struct endl_token : public token {
   operator std::string() const override { return ")"; }
 };
 
-struct dec_token : public token {
-  dec_token(const double &v) : val(v) {}
+struct decimal_token : public token {
+  decimal_token(const double &v) : val(v) {}
 
   operator std::string() const override { return std::to_string(val); }
 
@@ -37,4 +37,4 @@ struct id_token : public token {
   std::string name;
 };
 
-#endif // NINTY8_MINI_PROJECTS_R5_INTERPRETER_TOKEN_H
+#endif // header guard

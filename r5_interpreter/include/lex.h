@@ -7,4 +7,4 @@
 
 void lex(std::istream &in, std::deque<std::unique_ptr<token>> &tokens);
 
-#endif // NINTY8_MINI_PROJECTS_R5_INTERPRETER_LEX_H
+#endif // header guard

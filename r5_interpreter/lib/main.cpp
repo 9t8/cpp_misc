@@ -11,6 +11,6 @@ int main() {
 
   while (!tokens.empty()) {
     std::unique_ptr<datum> p_ast(parse(tokens));
-    std::cerr << "===-- next datum --===\n" << *p_ast;
+    std::cerr << "===-- begin new datum --===\n" << *p_ast;
   }
 }

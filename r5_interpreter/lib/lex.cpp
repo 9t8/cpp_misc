@@ -62,7 +62,7 @@ void lex(std::istream &in, std::deque<std::unique_ptr<token>> &tokens) {
     case token_type::decimal: {
       double val;
       in >> val;
-      tokens.push_back(std::unique_ptr<dec_token>(new dec_token(val)));
+      tokens.push_back(std::unique_ptr<decimal_token>(new decimal_token(val)));
     } break;
 
     case token_type::id: {
@@ -71,7 +71,7 @@ void lex(std::istream &in, std::deque<std::unique_ptr<token>> &tokens) {
       for (;;) {
         switch (in.peek()) {
         case '(': {
-          assert(0 && "illegal character in identifier: (");
+          assert(0 && "lex: illegal character in identifier: (");
         }
 
         case ')':
