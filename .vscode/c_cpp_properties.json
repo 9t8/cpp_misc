@@ -49,9 +49,9 @@
                 "-Wfloat-equal",
                 "-Wduplicated-cond",
                 "-Winvalid-pch",
+                "-ftrapv",
                 "-fsanitize=undefined",
                 "-fsanitize-undefined-trap-on-error",
-                "-ftrapv",
                 "-Og",
                 "-D_GLIBCXX_DEBUG"
             ]
