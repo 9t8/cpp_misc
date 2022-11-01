@@ -42,6 +42,7 @@
 				"-Winvalid-pch",
 				"-fsanitize=undefined",
 				"-fsanitize-undefined-trap-on-error",
+				"-ftrapv",
 				"-Og",
 				"-D_GLIBCXX_DEBUG"
 			],
