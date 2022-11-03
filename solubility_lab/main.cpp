@@ -1,4 +1,8 @@
-#include <bits/stdc++.h>
+#include <array>
+#include <deque>
+#include <iomanip>
+#include <iostream>
+#include <vector>
 
 //===-- class definitions --===
 

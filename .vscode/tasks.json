@@ -3,18 +3,24 @@
 	"tasks": [
 		{
 			"type": "cppbuild",
-			"label": "C/C++: g++.exe build active file",
-			"command": "C:/Program Files/CodeBlocks/MinGW/bin/g++.exe",
+			"label": "C/C++: clang++.exe build active file",
+			"command": "C:\\Users\\David\\Documents\\personal\\upp\\bin\\clang\\bin\\clang++.exe",
 			"args": [
-				"-fdiagnostics-color=always",
-				"-ggdb3",
+				"-fcolor-diagnostics",
+				"-fansi-escape-codes",
+				"-g", // ggdb3?
 				"${fileDirname}/**.cpp",
-				"-I",
-				"${fileDirname}/../include",
 				"-o",
 				"${workspaceFolder}/a.exe",
 				"-std=c++11",
 				"-pedantic",
+				"-D_GLIBCXX_DEBUG",
+				"-I",
+				"${fileDirname}/../include",
+				"-Og",
+				"-fsanitize=undefined",
+				"-fsanitize-undefined-trap-on-error",
+				"-ftrapv",
 				"-Wall",
 				"-Wextra",
 				"-Wcast-align",
@@ -23,31 +29,22 @@
 				"-Wdisabled-optimization",
 				"-Wformat=2",
 				"-Winit-self",
-				"-Wlogical-op",
 				"-Wmissing-include-dirs",
-				"-Wnoexcept",
 				"-Wold-style-cast",
 				"-Woverloaded-virtual",
 				"-Wredundant-decls",
 				"-Wshadow",
 				"-Wsign-promo",
-				"-Wstrict-null-sentinel",
 				"-Wstrict-overflow=4",
 				"-Wundef",
 				"-Winline",
 				"-Wzero-as-null-pointer-constant",
 				"-Wconversion",
 				"-Wfloat-equal",
-				"-Wduplicated-cond",
-				"-Winvalid-pch",
-				"-ftrapv",
-				"-fsanitize=undefined",
-				"-fsanitize-undefined-trap-on-error",
-				"-Og",
-				"-D_GLIBCXX_DEBUG"
+				"-Winvalid-pch"
 			],
 			"options": {
-				"cwd": "C:/Program Files/CodeBlocks/MinGW/bin"
+				"cwd": "C:\\Users\\David\\Documents\\personal\\upp\\bin\\clang\\bin"
 			},
 			"problemMatcher": [
 				"$gcc"
@@ -56,7 +53,7 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"detail": "compiler: \"C:/Program Files/CodeBlocks/MinGW/bin/g++.exe\""
+			"detail": "compiler: C:\\Users\\David\\Documents\\personal\\upp\\bin\\clang\\bin\\clang++.exe"
 		}
 	]
 }

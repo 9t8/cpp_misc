@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <map>
+#include <random>
 
 int sim_rand_parking(const double &width) {
   // <area of valid itvls before this itvl, start of this itvl>
@@ -12,12 +14,16 @@ int sim_rand_parking(const double &width) {
     static std::mt19937_64 rng; // deterministic
     static std::uniform_real_distribution<> dist;
 
-    double ar_valid_itvls_before(
-        dist(rng,
-             decltype(dist)::param_type(
-                 0, // area_valid_itvls // use on llvm:
-                    // https://github.com/llvm/llvm-project/issues/19141
-                 std::nextafter(area_valid_itvls, area_valid_itvls + 1))));
+    double ar_valid_itvls_before(dist(
+        rng,
+        decltype(dist)::param_type(
+            0,
+#ifdef __clang__
+            area_valid_itvls // https://github.com/llvm/llvm-project/issues/19141
+#else
+            std::nextafter(area_valid_itvls, area_valid_itvls + 1)
+#endif
+            )));
 
     auto it_itvl(valid_itvls.lower_bound(ar_valid_itvls_before));
     double itvl_size(std::next(it_itvl) == valid_itvls.end()
@@ -44,4 +50,4 @@ int sim_rand_parking(const double &width) {
   return cars_parked;
 }
 
-int main() { std::cout << sim_rand_parking(.999) << "\n"; }
+int main() { std::cout << sim_rand_parking(1) << "\n"; }
