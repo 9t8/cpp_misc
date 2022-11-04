@@ -17,7 +17,7 @@
             "compilerArgs": [
                 "-fcolor-diagnostics",
                 "-fansi-escape-codes",
-                "-g", // ggdb3?
+                "-glldb",
                 "${fileDirname}/**.cpp",
                 "-o",
                 "${workspaceFolder}/a.exe",
