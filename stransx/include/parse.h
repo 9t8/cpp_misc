@@ -4,8 +4,6 @@
 #include "datum.h"
 #include "token.h"
 
-#include <bits/stdc++.h>
-
 std::unique_ptr<datum> parse(std::deque<std::unique_ptr<token>> &tokens);
 
 #endif // header guard

@@ -1,7 +1,7 @@
 #ifndef NINTY8_MINI_PROJECTS_R5_INTERPRETER_TOKEN_H
 #define NINTY8_MINI_PROJECTS_R5_INTERPRETER_TOKEN_H
 
-#include <bits/stdc++.h>
+#include <ostream>
 
 enum class token_type { none, beginl, endl, id, decimal };
 

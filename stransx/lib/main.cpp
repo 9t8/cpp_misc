@@ -1,9 +1,7 @@
-#include "datum.h"
 #include "lex.h"
 #include "parse.h"
-#include "token.h"
 
-#include <bits/stdc++.h>
+#include <iostream>
 
 int main() {
   std::deque<std::unique_ptr<token>> tokens;

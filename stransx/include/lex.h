@@ -3,7 +3,7 @@
 
 #include "token.h"
 
-#include <bits/stdc++.h>
+#include <deque>
 
 void lex(std::istream &in, std::deque<std::unique_ptr<token>> &tokens);
 

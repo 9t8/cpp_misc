@@ -1,8 +1,7 @@
 #include "lex.h"
 
-#include "token.h"
-
-#include <bits/stdc++.h>
+#include <cassert>
+#include <sstream>
 
 token_type find_next_token_type(std::istream &in) {
   switch (in.peek()) {

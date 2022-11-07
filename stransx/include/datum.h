@@ -1,7 +1,8 @@
 #ifndef NINTY8_MINI_PROJECTS_R5_INTERPRETER_DATUM_H
 #define NINTY8_MINI_PROJECTS_R5_INTERPRETER_DATUM_H
 
-#include <bits/stdc++.h>
+#include <deque>
+#include <sstream>
 
 struct datum {
   virtual operator std::string() const = 0;

@@ -1,9 +1,6 @@
 #include "parse.h"
 
-#include "datum.h"
-#include "token.h"
-
-#include <bits/stdc++.h>
+#include <cassert>
 
 token_type find_next_token_type(std::deque<std::unique_ptr<token>> &tokens) {
   assert(!tokens.empty() && "find_next_token_type: expected a token but none "
