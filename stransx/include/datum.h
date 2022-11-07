@@ -5,6 +5,8 @@
 #include <sstream>
 
 struct datum {
+  virtual ~datum() {}
+
   virtual operator std::string() const = 0;
 
   friend std::ostream &operator<<(std::ostream &os, const datum &d) {

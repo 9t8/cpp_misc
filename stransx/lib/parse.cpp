@@ -20,6 +20,8 @@ token_type find_next_token_type(std::deque<std::unique_ptr<token>> &tokens) {
     return token_type::id;
   }
   assert(0 && "find_next_token_type: unexpected token type");
+
+  return token_type::none; // prevent warning
 }
 
 std::unique_ptr<datum> parse(std::deque<std::unique_ptr<token>> &tokens) {

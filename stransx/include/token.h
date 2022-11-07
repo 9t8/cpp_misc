@@ -6,6 +6,8 @@
 enum class token_type { none, beginl, endl, id, decimal };
 
 struct token {
+  virtual ~token() {}
+
   virtual operator std::string() const = 0;
 
   friend std::ostream &operator<<(std::ostream &os, const token &t) {
