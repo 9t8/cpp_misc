@@ -1,4 +1,4 @@
-// r3rs interpreter
+// r3rs interpreter with boost for numeric tower
 
 #include "lex.h"
 #include "parse.h"
