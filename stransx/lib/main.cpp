@@ -1,4 +1,4 @@
-// r4rs (r5rs?) interpreter
+// r3rs interpreter
 
 #include "lex.h"
 #include "parse.h"
