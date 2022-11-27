@@ -12,7 +12,7 @@
 				"${fileDirname}/**.cpp",
 				"-o",
 				"${workspaceFolder}/a.exe",
-				"-std=c++11",
+				"-std=c++17",
 				"-pedantic",
 				"-D_GLIBCXX_DEBUG",
 				"-I",
