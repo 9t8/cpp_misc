@@ -13,7 +13,7 @@
       "cStandard": "c11",
       "cppStandard": "c++17",
       "intelliSenseMode": "${default}",
-      "compilerPath": "C:\\Users\\David\\Documents\\personal\\upp\\bin\\clang\\bin\\clang++.exe",
+      "compilerPath": "C:\\Users\\David\\Documents\\upp\\bin\\clang\\bin\\clang++.exe",
       "compilerArgs": [
         "${fileDirname}/**.cpp",
         "-std=c++17",
