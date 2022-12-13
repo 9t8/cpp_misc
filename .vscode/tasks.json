@@ -4,7 +4,7 @@
     {
       "type": "cppbuild",
       "label": "C/C++: clang++.exe build active file",
-      "command": "C:\\Users\\David\\Documents\\personal\\upp\\bin\\clang\\bin\\clang++.exe",
+      "command": "C:\\Users\\David\\Documents\\upp\\bin\\clang\\bin\\clang++.exe",
       "args": [
         "-fcolor-diagnostics",
         "-fansi-escape-codes",
@@ -43,7 +43,7 @@
         "-Winvalid-pch"
       ],
       "options": {
-        "cwd": "C:\\Users\\David\\Documents\\personal\\upp\\bin\\clang\\bin"
+        "cwd": "C:\\Users\\David\\Documents\\upp\\bin\\clang\\bin"
       },
       "problemMatcher": [
         "$gcc"
@@ -52,7 +52,7 @@
         "kind": "build",
         "isDefault": true
       },
-      "detail": "compiler: C:\\Users\\David\\Documents\\personal\\upp\\bin\\clang\\bin\\clang++.exe"
+      "detail": "compiler: C:\\Users\\David\\Documents\\upp\\bin\\clang\\bin\\clang++.exe"
     }
   ]
 }
