@@ -1,7 +1,7 @@
 #include <deque>
 #include <iostream>
 
-using ll = long long;
+typedef long long ll;
 
 ll solve(ll a, const ll &b) {
   std::deque<ll> path_to_b = {b};

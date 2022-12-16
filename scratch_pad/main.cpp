@@ -1,6 +1,6 @@
 #include <iostream>
 
-using ll = long long;
+typedef long long ll;
 
 template <typename t, size_t sz>
 t &last(t (&super_duper_long_variable_name_for_an_array)[sz]) {
