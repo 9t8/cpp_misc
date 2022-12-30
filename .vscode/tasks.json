@@ -19,7 +19,6 @@
         "-Og",
         "-fsanitize=undefined",
         "-fsanitize-undefined-trap-on-error",
-        "-ftrapv",
         "-Wall",
         "-Wextra",
         "-Wcast-align",
