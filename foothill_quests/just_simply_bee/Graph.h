@@ -5,7 +5,7 @@
 #include <bits/stdc++.h>
 
 class Graph {
-public:
+ public:
   void make_silly_snake() {
     _nodes = {{{1, "i-see"}},      {{2, "the-silly-snake"}}, {{3, "i-be"}},
               {{4, "you-saw-me"}}, {{5, "once-like"}},       {{0, "kekule"}}};
@@ -63,7 +63,7 @@ public:
     sierpinski(3, 0, 1);
   }
 
-protected:
+ protected:
   friend class Tests;
 
   struct Edge {
@@ -73,7 +73,7 @@ protected:
 
   std::vector<std::vector<Edge>> _nodes;
 
-private:
+ private:
   int sierpinski(int depth, int root, int root1) {
     if (depth == 0) {
       _nodes[root1].push_back({root, ""});

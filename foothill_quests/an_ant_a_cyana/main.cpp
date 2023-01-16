@@ -1,6 +1,6 @@
-#include "Queue.h"
-
 #include <bits/stdc++.h>
+
+#include "Queue.h"
 
 int main() {
   const int DUMMY_ELEM = 0xDEADBEEF;
@@ -57,10 +57,10 @@ int main() {
   std::cout << "Resizing with gt, eq or lt values\n";
 
   std::cout << "1 - Resizing to same size...\n";
-  q.resize(5); // equal size, nothing should happen
+  q.resize(5);  // equal size, nothing should happen
 
   std::cout << "2 - Resizing to a larger size...and limit printing\n";
-  q.resize(10); // larger
+  q.resize(10);  // larger
   // Now add elements
   for (int i = 7; i < 9; ++i) {
     assert(q.enqueue(elem + i * inc) == true);
@@ -72,7 +72,7 @@ int main() {
   // The transition from larger to less than original (size 5) is tricky. You
   // might be tempted at just blindly resize vector but that will not work in
   // many corner cases. Paper and pen are your friends here
-  q.resize(2); // less
+  q.resize(2);  // less
 
   std::cout << "Done with main tests\n";
 

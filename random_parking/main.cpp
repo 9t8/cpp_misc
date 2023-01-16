@@ -11,7 +11,7 @@ int sim_rand_parking(const double &width) {
     // area_valid_itvls := S(valid_pos?(x), 0, width)
 
     // insert new car
-    static std::mt19937_64 rng; // deterministic
+    static std::mt19937_64 rng;  // deterministic
     static std::uniform_real_distribution<> dist;
 
     double ar_valid_itvls_before(dist(
@@ -19,7 +19,7 @@ int sim_rand_parking(const double &width) {
         decltype(dist)::param_type(
             0,
 #ifdef __clang__
-            area_valid_itvls // https://github.com/llvm/llvm-project/issues/19141
+            area_valid_itvls  // https://github.com/llvm/llvm-project/issues/19141
 #else
             std::nextafter(area_valid_itvls, area_valid_itvls + 1)
 #endif

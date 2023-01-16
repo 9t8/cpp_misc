@@ -1,6 +1,6 @@
-#include "Hanoi.h"
-
 #include <bits/stdc++.h>
+
+#include "Hanoi.h"
 
 using namespace std;
 

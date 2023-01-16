@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 
 class Pet {
-public:
+ public:
   static std::string make_a_name(int len);
 
   static void get_n_pets(size_t n, std::vector<Pet> &pets, int name_length);
@@ -28,7 +28,7 @@ public:
 
   bool set_num_limbs(int num_limbs);
 
-private:
+ private:
   friend class Tests;
 
   static size_t _population;

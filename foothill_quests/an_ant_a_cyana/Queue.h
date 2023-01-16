@@ -4,8 +4,9 @@
 
 #include <bits/stdc++.h>
 
-template <typename T> class Queue {
-public:
+template <typename T>
+class Queue {
+ public:
   static const int MAX_DISP_ELEMS = 100;
 
   static void set_sentinel(const T &elem) { _sentinel = elem; }
@@ -24,8 +25,7 @@ public:
 
     for (auto &datum : new_data) {
       datum = peek();
-      if (!dequeue())
-        break;
+      if (!dequeue()) break;
     }
 
     _data = new_data;
@@ -36,16 +36,14 @@ public:
   const T &peek() const { return is_empty() ? _sentinel : _data[_head]; }
 
   bool dequeue() {
-    if (is_empty())
-      return false;
+    if (is_empty()) return false;
 
     _head = (_head + 1) % _data.size();
     return true;
   }
 
   bool enqueue(const T &elem) {
-    if (size() + 1 == _data.size())
-      return false;
+    if (size() + 1 == _data.size()) return false;
 
     _data[_tail] = elem;
     _tail = (_tail + 1) % _data.size();
@@ -63,7 +61,7 @@ public:
     return result.str();
   }
 
-private:
+ private:
   friend class Tests;
 
   static T _sentinel;
@@ -72,9 +70,11 @@ private:
   size_t _head, _tail;
 };
 
-template <typename T> T Queue<T>::_sentinel = T();
+template <typename T>
+T Queue<T>::_sentinel = T();
 
-template <typename T> void popalot(Queue<T> &q) {
+template <typename T>
+void popalot(Queue<T> &q) {
   while (q.dequeue())
     ;
 }

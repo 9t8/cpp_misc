@@ -5,9 +5,9 @@
 #include <bits/stdc++.h>
 
 class Complex {
-public:
+ public:
   class Div_By_Zero_Exception {
-  public:
+   public:
     std::string what() { return "Divide by zero exception"; }
 
     std::string to_string() { return what(); }
@@ -40,8 +40,7 @@ public:
 
   Complex reciprocal() const {
     double denom = _real * _real + _imag * _imag;
-    if (denom == 0)
-      throw Div_By_Zero_Exception();
+    if (denom == 0) throw Div_By_Zero_Exception();
 
     return Complex(_real / denom, -_imag / denom);
   }

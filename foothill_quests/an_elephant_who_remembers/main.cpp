@@ -1,6 +1,6 @@
-#include "Stacks.h"
-
 #include <bits/stdc++.h>
+
+#include "Stacks.h"
 
 using namespace std;
 

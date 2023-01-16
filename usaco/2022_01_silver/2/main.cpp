@@ -22,8 +22,7 @@ int main() {
   for (int i(N - 1); i >= 0; --i) {
     auto new_cow(cows.insert(locs[i]).first);
 
-    if (new_cow != cows.begin())
-      ans += *new_cow - *std::prev(new_cow) + 1;
+    if (new_cow != cows.begin()) ans += *new_cow - *std::prev(new_cow) + 1;
 
     if (std::next(new_cow) != cows.end())
       ans += *std::next(new_cow) - *new_cow + 1;

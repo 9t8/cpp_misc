@@ -106,23 +106,20 @@ std::ostream &operator<<(std::ostream &os, const compound &c) {
 }
 
 std::ostream &operator<<(std::ostream &os, const std::deque<int> &di) {
-  for (const auto &i : di)
-    os << " " << i;
+  for (const auto &i : di) os << " " << i;
 
   return os;
 }
 
 std::ostream &operator<<(std::ostream &os, const evidence_table &t) {
   os << "\t";
-  for (int i(0); i < num_ans; ++i)
-    os << std::setw(8) << an_names[i];
+  for (int i(0); i < num_ans; ++i) os << std::setw(8) << an_names[i];
 
   os << "\n";
 
   for (int i(0); i < num_cats; ++i) {
     os << std::setw(8) << cat_names[i];
-    for (int j(0); j < num_ans; ++j)
-      os << std::setw(8) << t[i][j].size();
+    for (int j(0); j < num_ans; ++j) os << std::setw(8) << t[i][j].size();
 
     os << "\n";
   }
@@ -146,7 +143,7 @@ void table_to_list(const std::vector<compound> &rows,
 }
 
 void gen_mix_list(std::deque<mix> &mixes) {
-  mixes.push_back({{}, {}, false}); // mixes are 1-indexed, [0] used as delim
+  mixes.push_back({{}, {}, false});  // mixes are 1-indexed, [0] used as delim
   table_to_list(s1_rows, s1_cols, s1_data, mixes);
   table_to_list(s2_rows, s2_cols, s2_data, mixes);
   table_to_list(s3_rows, s3_cols, s3_data, mixes);

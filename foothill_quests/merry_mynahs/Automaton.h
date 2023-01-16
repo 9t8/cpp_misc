@@ -5,14 +5,13 @@
 #include <bits/stdc++.h>
 
 class Automaton {
-public:
+ public:
   static size_t pow_2(size_t n) { return 1U << n; }
 
   static size_t translate_n_bits_starting_at(const std::vector<int> &bits,
                                              size_t pos, size_t n) {
     size_t result(0);
-    for (n += pos; pos < n; ++pos)
-      result = result << 1 | bits[pos];
+    for (n += pos; pos < n; ++pos) result = result << 1 | bits[pos];
     return result;
   }
 
@@ -28,8 +27,7 @@ public:
   }
 
   std::string generation_to_string(const std::vector<int> &gen, size_t width) {
-    if (!_is_valid || width % 2 == 0)
-      return "";
+    if (!_is_valid || width % 2 == 0) return "";
 
     std::string result(width, _extreme_bit == 0 ? " " : '*');
     for (int i(0), offset((static_cast<int>(width) - gen.size()) / 2);
@@ -43,8 +41,7 @@ public:
   }
 
   bool set_rule(size_t rule) {
-    if (rule >= pow_2(_rules.size()))
-      return _is_valid = false;
+    if (rule >= pow_2(_rules.size())) return _is_valid = false;
 
     for (auto it(_rules.begin()); it < _rules.end(); ++it) {
       *it = rule & 1;
@@ -55,8 +52,7 @@ public:
 
   bool make_next_gen(const std::vector<int> &current_gen,
                      std::vector<int> &next_gen) {
-    if (!_is_valid)
-      return false;
+    if (!_is_valid) return false;
 
     if (current_gen.empty()) {
       next_gen = {1};
@@ -72,8 +68,7 @@ public:
     next_gen.resize(current_gen.size() + _num_parents - 1);
 
     auto get_cell([&](const int &i) {
-      if (i < 0 || i >= current_size)
-        return _extreme_bit;
+      if (i < 0 || i >= current_size) return _extreme_bit;
       return current_gen[i];
     });
 
@@ -91,8 +86,7 @@ public:
   }
 
   std::string get_first_n_generations(size_t n, size_t width) {
-    if (!_is_valid || width % 2 == 0)
-      return "";
+    if (!_is_valid || width % 2 == 0) return "";
 
     std::string result;
     std::vector<int> cells;

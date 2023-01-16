@@ -33,8 +33,7 @@ struct Trie {
          i < static_cast<long long>(std::min(limit, completions.size())); ++i)
       result += completions[i] + "\n";
 
-    if (completions.size() > limit)
-      result += "...\n";
+    if (completions.size() > limit) result += "...\n";
 
     return result;
   }
@@ -47,24 +46,19 @@ struct Trie {
     std::vector<Trie::Node *> next;
 
     ~Node() {
-      for (const auto &el : next)
-        delete el;
+      for (const auto &el : next) delete el;
     }
 
     void insert(std::string s) {
-      if (s[0] >= static_cast<long long>(next.size()))
-        next.resize(s[0] + 1);
+      if (s[0] >= static_cast<long long>(next.size())) next.resize(s[0] + 1);
 
-      if (next[s[0]] == nullptr)
-        next[s[0]] = new Node;
+      if (next[s[0]] == nullptr) next[s[0]] = new Node;
 
-      if (!s.empty())
-        next[s[0]]->insert(s.substr(1));
+      if (!s.empty()) next[s[0]]->insert(s.substr(1));
     }
 
     const Node *traverse(std::string s) const {
-      if (s.empty())
-        return this;
+      if (s.empty()) return this;
 
       if (s[0] >= static_cast<long long>(next.size()) || next[s[0]] == nullptr)
         return nullptr;
@@ -81,8 +75,7 @@ struct Trie {
     size_t get_completions(std::vector<std::string> &completions,
                            size_t limit) const {
       completions.clear();
-      if (limit == 0)
-        return 0;
+      if (limit == 0) return 0;
 
       struct Continuation {
         const Trie::Node *node;
@@ -99,8 +92,7 @@ struct Trie {
           cont.partial.pop_back();
           completions.push_back(cont.partial);
 
-          if (completions.size() == limit)
-            break;
+          if (completions.size() == limit) break;
         }
 
         for (char i(0); i < static_cast<long long>(cont.node->next.size()); ++i)
@@ -111,7 +103,7 @@ struct Trie {
       return completions.size();
     }
 
-  } * _root;
+  } *_root;
 
   const Node *traverse(std::string s) const { return _root->traverse(s); }
 };

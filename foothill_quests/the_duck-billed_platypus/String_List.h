@@ -13,9 +13,11 @@
 // only look forward (and not back) in singly linked lists.
 
 class String_List {
-public:
+ public:
   String_List()
-      : _head(new Node("_SENTINEL_")), _tail(_head), _prev_to_current(_head),
+      : _head(new Node("_SENTINEL_")),
+        _tail(_head),
+        _prev_to_current(_head),
         _size(0) {}
 
   ~String_List() {
@@ -27,8 +29,7 @@ public:
     auto ptr_new(new Node(s));
     ptr_new->next = _prev_to_current->next;
     _prev_to_current->next = ptr_new;
-    if (_tail == _prev_to_current)
-      _tail = ptr_new;
+    if (_tail == _prev_to_current) _tail = ptr_new;
 
     ++_size;
 
@@ -47,8 +48,7 @@ public:
     auto ptr_new(new Node(s));
     ptr_new->next = _head->next;
     _head->next = ptr_new;
-    if (_tail == _head)
-      _tail = ptr_new;
+    if (_tail == _head) _tail = ptr_new;
 
     ++_size;
 
@@ -56,8 +56,7 @@ public:
   }
 
   String_List *advance_current() {
-    if (_prev_to_current == _tail)
-      return nullptr;
+    if (_prev_to_current == _tail) return nullptr;
 
     _prev_to_current = _prev_to_current->next;
 
@@ -67,8 +66,7 @@ public:
   std::string get_current() const { return _prev_to_current->next->data; }
 
   String_List *remove_at_current() {
-    if (_prev_to_current->next == _tail)
-      _tail = _prev_to_current;
+    if (_prev_to_current->next == _tail) _tail = _prev_to_current;
 
     auto ptr_next(_prev_to_current->next->next);
     delete _prev_to_current->next;
@@ -109,8 +107,7 @@ public:
   std::string &find_item(std::string s) const {
     for (auto ptr_node(_head->next); ptr_node != nullptr;
          ptr_node = ptr_node->next)
-      if (ptr_node->data == s)
-        return ptr_node->data;
+      if (ptr_node->data == s) return ptr_node->data;
 
     static std::string sentinel;
     return sentinel = _head->data;
@@ -139,7 +136,7 @@ public:
     return result.str();
   }
 
-private:
+ private:
   friend class Tests;
 
   struct Node {

@@ -1,6 +1,6 @@
-#include "Tree.h"
-
 #include <bits/stdc++.h>
+
+#include "Tree.h"
 
 int main() {
   Tree t;

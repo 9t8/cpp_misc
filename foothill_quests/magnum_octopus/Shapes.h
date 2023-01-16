@@ -5,7 +5,7 @@
 #include <bits/stdc++.h>
 
 class Screen {
-public:
+ public:
   static const char FG = '*', BG = '.';
 
   Screen(size_t w, size_t h)
@@ -42,7 +42,7 @@ public:
     return os << scr.to_string();
   };
 
-private:
+ private:
   friend class Shape;
   friend class Tests;
 
@@ -51,31 +51,30 @@ private:
 };
 
 class Shape {
-public:
+ public:
   virtual ~Shape() {}
 
   virtual bool draw(Screen &scr, char ch = Screen::FG) = 0;
 
-private:
+ private:
   friend class Tests;
 };
 
 // --------- Point ---------------------------------
 class Point : public Shape {
-public:
+ public:
   Point(size_t x, size_t y) : _x(x), _y(y) {}
 
   virtual ~Point() {}
 
   bool draw(Screen &scr, char ch = Screen::FG) {
-    if (_y >= scr.get_h() || _x >= scr.get_w())
-      return false;
+    if (_y >= scr.get_h() || _x >= scr.get_w()) return false;
 
     scr.get_pix()[_y][_x] = ch;
     return true;
   }
 
-private:
+ private:
   friend class Tests;
 
   size_t _x, _y;
@@ -83,7 +82,7 @@ private:
 
 // ----------- Line in two point notation ---------------------
 class Line : public Shape {
-public:
+ public:
   Line(size_t a, size_t b, size_t c, size_t d)
       : _x1(a), _y1(b), _x2(c), _y2(d) {}
 
@@ -99,15 +98,14 @@ public:
                : draw_by_y(scr, ch, _x1, _y1, _x2, _y2);
   }
 
-private:
+ private:
   friend class Tests;
 
   size_t _x1, _y1, _x2, _y2;
 
   static bool draw_by_x(Screen &scr, char ch, size_t x1, size_t y1, size_t x2,
                         size_t y2) {
-    if (x1 > x2)
-      return draw_by_x(scr, ch, x2, y2, x1, y1);
+    if (x1 > x2) return draw_by_x(scr, ch, x2, y2, x1, y1);
 
     bool contained(true);
 
@@ -122,8 +120,7 @@ private:
 
   static bool draw_by_y(Screen &scr, char ch, size_t x1, size_t y1, size_t x2,
                         size_t y2) {
-    if (y1 > y2)
-      return draw_by_y(scr, ch, x2, y2, x1, y1);
+    if (y1 > y2) return draw_by_y(scr, ch, x2, y2, x1, y1);
 
     bool contained(true);
 
@@ -142,7 +139,7 @@ private:
 // from bottom left. For the special case when x1==x2, y2==y3, x3==x4
 // and y4==y1, we'd use an Upright_Rectangle.
 class Quadrilateral : public Shape {
-public:
+ public:
   Quadrilateral(size_t a, size_t b, size_t c, size_t d, size_t e, size_t f,
                 size_t g, size_t h)
       : _x1(a), _y1(b), _x2(c), _y2(d), _x3(e), _y3(f), _x4(g), _y4(h) {}
@@ -156,7 +153,7 @@ public:
            Line(_x4, _y4, _x1, _y1).draw(scr, ch);
   }
 
-private:
+ private:
   friend class Tests;
 
   size_t _x1, _y1, _x2, _y2, _x3, _y3, _x4, _y4;
@@ -166,7 +163,7 @@ private:
 // A Rectangle is a special upright Quadrilateral so we don't have to
 // parameterize the constructor with a ton of numbers
 class Upright_Rectangle : public Quadrilateral {
-public:
+ public:
   Upright_Rectangle(size_t x1, size_t y1, size_t x2, size_t y2)
       : Quadrilateral(x1, y1, x1, y2, x2, y2, x2, y1) {}
 
@@ -175,10 +172,13 @@ public:
 
 // ----------- StickMan, a composite Shape ------------------------------
 class Stick_Man : public Shape {
-public:
+ public:
   Stick_Man(size_t x = 0, size_t y = 0, size_t w = DEFAULT_W,
             size_t h = DEFAULT_H)
-      : _x(x), _y(y), _w(w < 2 ? DEFAULT_W : w), _h(h < 2 ? DEFAULT_H : h),
+      : _x(x),
+        _y(y),
+        _w(w < 2 ? DEFAULT_W : w),
+        _h(h < 2 ? DEFAULT_H : h),
         _parts{new Upright_Rectangle(x, y + _h / 2, x + _w - 1, y + _h - 1),
                new Line(x + _w / 2, y + _h / 2, x + _w / 2, y + _h / 4),
                new Line(x + _w / 2, y + _h / 2, x + _w / 4, y + _h / 4),
@@ -202,7 +202,7 @@ public:
     return contained;
   }
 
-private:
+ private:
   friend class Tests;
 
   static const size_t DEFAULT_W = 20, DEFAULT_H = 40;

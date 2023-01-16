@@ -44,8 +44,7 @@ size_t gcd(size_t n1, size_t n2) {
 }
 
 string get_ap_terms(int a, int d, size_t n) {
-  if (n == 0)
-    return "";
+  if (n == 0) return "";
 
   ostringstream result;
   result << a;
@@ -56,8 +55,7 @@ string get_ap_terms(int a, int d, size_t n) {
 }
 
 string get_gp_terms(double a, double r, size_t n) {
-  if (n == 0)
-    return "";
+  if (n == 0) return "";
 
   ostringstream result;
   result << a;

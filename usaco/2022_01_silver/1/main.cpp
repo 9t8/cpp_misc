@@ -5,8 +5,7 @@ typedef long long ll;
 
 ll solve(ll a, const ll &b) {
   std::deque<ll> path_to_b = {b};
-  while (path_to_b.back() > 1)
-    path_to_b.push_back(path_to_b.end()[-1] / 2);
+  while (path_to_b.back() > 1) path_to_b.push_back(path_to_b.end()[-1] / 2);
 
   ll ops(0);
   while (a * 2 <= b) {
@@ -20,8 +19,7 @@ ll solve(ll a, const ll &b) {
 ll search_solve(const ll &a, const ll &b) {
   ll dir_ops(solve(a, b));
 
-  if (a == 1)
-    return dir_ops;
+  if (a == 1) return dir_ops;
 
   return std::min(dir_ops, 1 + a % 2 + search_solve((a + 1) / 2, b));
 }

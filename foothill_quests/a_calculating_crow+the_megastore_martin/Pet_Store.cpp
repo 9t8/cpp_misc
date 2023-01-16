@@ -70,8 +70,7 @@ bool Pet_Store::find_pet_by_name_lin(string name, Pet &pet) {
 // non-descending order by _id. If it is not already, then it will be
 // resorted.
 bool Pet_Store::find_pet_by_id_bin(long id, Pet &pet) {
-  if (_sort_order != BY_ID)
-    _sort_pets_by_id();
+  if (_sort_order != BY_ID) _sort_pets_by_id();
 
   for (int first(0), last(_pets.size()); first < last;) {
     int mid((first + last) / 2);
@@ -92,8 +91,7 @@ bool Pet_Store::find_pet_by_id_bin(long id, Pet &pet) {
 // lexicographic non-descending order by _name. If it is not already,
 // then it will be resorted.
 bool Pet_Store::find_pet_by_name_bin(string name, Pet &pet) {
-  if (_sort_order != BY_NAME)
-    _sort_pets_by_name();
+  if (_sort_order != BY_NAME) _sort_pets_by_name();
 
   for (int first(0), last(_pets.size()); first < last;) {
     int mid((first + last) / 2);

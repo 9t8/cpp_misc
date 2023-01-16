@@ -52,8 +52,7 @@ string Pet::to_string() const {
 string Pet::get_name() const { return _name; }
 
 bool Pet::set_name(string name) {
-  if (name.empty())
-    return false;
+  if (name.empty()) return false;
 
   _name = name;
   return true;
@@ -62,8 +61,7 @@ bool Pet::set_name(string name) {
 long Pet::get_id() const { return _id; }
 
 bool Pet::set_id(long id) {
-  if (id < 0)
-    return false;
+  if (id < 0) return false;
 
   _id = id;
   return true;
@@ -72,8 +70,7 @@ bool Pet::set_id(long id) {
 int Pet::get_num_limbs() const { return _num_limbs; }
 
 bool Pet::set_num_limbs(int num_limbs) {
-  if (num_limbs < 0)
-    return false;
+  if (num_limbs < 0) return false;
 
   _num_limbs = num_limbs;
   return true;

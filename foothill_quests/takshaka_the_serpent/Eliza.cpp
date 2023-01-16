@@ -10,16 +10,16 @@ string lispify(string s) {
   ostringstream result;
   for (const auto &c : s) {
     switch (c) {
-    case 'S':
-      result << "Th";
-      break;
+      case 'S':
+        result << "Th";
+        break;
 
-    case 's':
-      result << "th";
-      break;
+      case 's':
+        result << "th";
+        break;
 
-    default:
-      result << c;
+      default:
+        result << c;
     }
   }
   return result.str();
@@ -28,45 +28,45 @@ string lispify(string s) {
 string rotate_vowels(string &s) {
   for (auto &c : s) {
     switch (c) {
-    case 'A':
-      c = 'E';
-      break;
+      case 'A':
+        c = 'E';
+        break;
 
-    case 'E':
-      c = 'I';
-      break;
+      case 'E':
+        c = 'I';
+        break;
 
-    case 'I':
-      c = 'O';
-      break;
+      case 'I':
+        c = 'O';
+        break;
 
-    case 'O':
-      c = 'U';
-      break;
+      case 'O':
+        c = 'U';
+        break;
 
-    case 'U':
-      c = 'A';
-      break;
+      case 'U':
+        c = 'A';
+        break;
 
-    case 'a':
-      c = 'e';
-      break;
+      case 'a':
+        c = 'e';
+        break;
 
-    case 'e':
-      c = 'i';
-      break;
+      case 'e':
+        c = 'i';
+        break;
 
-    case 'i':
-      c = 'o';
-      break;
+      case 'i':
+        c = 'o';
+        break;
 
-    case 'o':
-      c = 'u';
-      break;
+      case 'o':
+        c = 'u';
+        break;
 
-    case 'u':
-      c = 'a';
-      break;
+      case 'u':
+        c = 'a';
+        break;
     }
   }
   return s;

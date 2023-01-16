@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Pet.h"
-
 #include <bits/stdc++.h>
 
+#include "Pet.h"
+
 class Pet_Store {
-public:
+ public:
   Pet_Store(size_t n = 0);
 
   size_t get_size() const;
@@ -28,7 +28,7 @@ public:
   // index n1 to n2-1 (inclusive)
   std::string to_string(size_t n1, size_t n2);
 
-private:
+ private:
   friend class Tests;
 
   enum _SORT_ORDER { BY_ID, BY_NAME, NONE };

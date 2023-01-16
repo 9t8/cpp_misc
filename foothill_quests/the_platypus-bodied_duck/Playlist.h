@@ -5,9 +5,9 @@
 #include <bits/stdc++.h>
 
 class Playlist {
-public:
+ public:
   class Song_Entry {
-  public:
+   public:
     Song_Entry(int id = 0, std::string name = "Unnamed")
         : _id(id), _name(name) {}
 
@@ -16,16 +16,14 @@ public:
     std::string get_name() const { return _name; }
 
     bool set_id(int id) {
-      if (id < 0)
-        return false;
+      if (id < 0) return false;
 
       _id = id;
       return true;
     }
 
     bool set_name(std::string name) {
-      if (name.empty())
-        return false;
+      if (name.empty()) return false;
 
       _name = name;
       return true;
@@ -41,7 +39,7 @@ public:
       return os << "{ id: " << s.get_id() << ", name: " << s.get_name() << " }";
     }
 
-  private:
+   private:
     friend class Tests;
 
     int _id;
@@ -49,8 +47,10 @@ public:
   };
 
   Playlist()
-      : _head(new Node(Song_Entry(-1, "HEAD"))), _tail(_head),
-        _prev_to_current(_head), _size(0) {}
+      : _head(new Node(Song_Entry(-1, "HEAD"))),
+        _tail(_head),
+        _prev_to_current(_head),
+        _size(0) {}
 
   ~Playlist() { delete _head; }
 
@@ -89,8 +89,7 @@ public:
     auto ptr_new(new Node(s));
     ptr_new->insert_next(_head->get_next());
     _head->insert_next(ptr_new);
-    if (_tail == _head)
-      _tail = ptr_new;
+    if (_tail == _head) _tail = ptr_new;
 
     ++_size;
 
@@ -101,8 +100,7 @@ public:
     auto ptr_new(new Node(s));
     ptr_new->insert_next(_prev_to_current->get_next());
     _prev_to_current->insert_next(ptr_new);
-    if (_tail == _prev_to_current)
-      _tail = ptr_new;
+    if (_tail == _prev_to_current) _tail = ptr_new;
 
     ++_size;
 
@@ -110,8 +108,7 @@ public:
   }
 
   Playlist *remove_at_cursor() {
-    if (_prev_to_current->get_next() == _tail)
-      _tail = _prev_to_current;
+    if (_prev_to_current->get_next() == _tail) _tail = _prev_to_current;
 
     _prev_to_current->remove_next();
 
@@ -121,8 +118,7 @@ public:
   }
 
   Playlist *advance_cursor() {
-    if (_prev_to_current == _tail)
-      return nullptr;
+    if (_prev_to_current == _tail) return nullptr;
 
     _prev_to_current = _prev_to_current->get_next();
 
@@ -132,8 +128,7 @@ public:
   Playlist *circular_advance_cursor() {
     _prev_to_current = _prev_to_current->get_next();
 
-    if (_prev_to_current == _tail)
-      rewind();
+    if (_prev_to_current == _tail) rewind();
 
     return this;
   }
@@ -141,8 +136,7 @@ public:
   Song_Entry &find_by_id(int id) const {
     for (auto ptr_node(_head->get_next()); ptr_node != nullptr;
          ptr_node = ptr_node->get_next())
-      if (ptr_node->get_song().get_id() == id)
-        return ptr_node->get_song();
+      if (ptr_node->get_song().get_id() == id) return ptr_node->get_song();
 
     return _head->get_song();
   }
@@ -170,26 +164,23 @@ public:
       }
 
       result << ptr_node->get_song();
-      if (ptr_node == _prev_to_current)
-        result << " [P]";
-      if (ptr_node == _tail)
-        result << " [T]";
+      if (ptr_node == _prev_to_current) result << " [P]";
+      if (ptr_node == _tail) result << " [T]";
       result << "\n";
     }
 
     return result.str();
   }
 
-private:
+ private:
   friend class Tests;
 
   class Node {
-  public:
+   public:
     Node(const Song_Entry &song = Song_Entry()) : _song(song), _next(nullptr) {}
 
     ~Node() {
-      while (get_next() != nullptr)
-        remove_next();
+      while (get_next() != nullptr) remove_next();
     }
 
     Song_Entry &get_song() { return _song; }
@@ -207,7 +198,7 @@ private:
       return this;
     }
 
-  private:
+   private:
     friend class Tests;
 
     Song_Entry _song;

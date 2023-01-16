@@ -5,7 +5,7 @@
 #include <bits/stdc++.h>
 
 class Stack_Int {
-public:
+ public:
   size_t size() const { return _data.size(); }
 
   bool is_empty() const { return _data.empty(); }
@@ -22,8 +22,7 @@ public:
   }
 
   bool pop() {
-    if (is_empty())
-      return false;
+    if (is_empty()) return false;
 
     _data.pop_back();
     return true;
@@ -41,21 +40,20 @@ public:
     for (int i(0); i < 10 && i < static_cast<int>(size()); ++i)
       result << _data.end()[-1 - i] << "\n";
 
-    if (size() > 10)
-      result << "...\n";
+    if (size() > 10) result << "...\n";
 
     result << "Elements, if listed above, are in increasing order of age.";
     return result.str();
   }
 
-private:
+ private:
   friend class Tests;
 
   std::vector<int> _data;
 };
 
 class Stack_String {
-public:
+ public:
   size_t size() const { return _data.size(); }
 
   bool is_empty() const { return _data.empty(); }
@@ -72,8 +70,7 @@ public:
   }
 
   bool pop() {
-    if (is_empty())
-      return false;
+    if (is_empty()) return false;
 
     _data.pop_back();
     return true;
@@ -98,7 +95,7 @@ public:
     return result.str();
   }
 
-private:
+ private:
   friend class Tests;
 
   std::vector<std::string> _data;

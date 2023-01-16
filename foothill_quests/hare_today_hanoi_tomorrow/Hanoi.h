@@ -5,13 +5,13 @@
 #include <bits/stdc++.h>
 
 class Hanoi {
-public:
+ public:
   std::string solve(int num_discs, int src, int dst, int tmp) {
     return "# Below, 'A->B' means 'move the top disc on pole A to pole B'\n" +
            get_moves(num_discs, src, dst, tmp);
   }
 
-private:
+ private:
   friend class Tests;
 
   std::vector<std::vector<std::vector<std::string>>> _cache;
@@ -25,8 +25,7 @@ private:
   }
 
   std::string get_moves(int num_discs, int src, int dst, int tmp) {
-    if (num_discs == 0)
-      return "";
+    if (num_discs == 0) return "";
 
     if (static_cast<int>(_cache.size()) <= num_discs)
       _cache.resize(num_discs + 1);

@@ -1,6 +1,6 @@
-#include "Graph.h"
-
 #include <bits/stdc++.h>
+
+#include "Graph.h"
 
 int main() {
   Graph g;

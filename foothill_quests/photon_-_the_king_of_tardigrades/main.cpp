@@ -1,9 +1,9 @@
-#include "Trie.h"
-
 #include <bits/stdc++.h>
 
+#include "Trie.h"
+
 class Tests {
-public:
+ public:
   Trie *t;
 
   Trie::Node *traverse(std::string s) {
