@@ -207,8 +207,6 @@ int find_worst_mix(const std::deque<compound> &contradictions,
          trouble_count.begin();
 }
 
-//===-- main --===
-
 int main() {
   std::deque<mix> mixes;
   gen_mix_list(mixes);
