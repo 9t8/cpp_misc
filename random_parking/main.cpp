@@ -7,13 +7,12 @@ int sim_rand_parking(const double &width) {
   std::map<double, double> valid_itvls{{0, 0}};
 
   int cars_parked(0);
+  // area_valid_itvls <- S_{0}^{width} valid_pos?(x)
   for (double area_valid_itvls(width - 1); area_valid_itvls >= 0;) {
-    // area_valid_itvls := S(valid_pos?(x), 0, width)
-
-    // insert new car
     static std::mt19937_64 rng;  // deterministic
     static std::uniform_real_distribution<> dist;
 
+    // insert new car
     double ar_valid_itvls_before(dist(
         rng,
         decltype(dist)::param_type(
