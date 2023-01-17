@@ -15,14 +15,14 @@ int sim_rand_parking(const double &width) {
     // insert new car
     double ar_valid_itvls_before(dist(
         rng,
-        decltype(dist)::param_type(
-            0,
 #ifdef __clang__
-            area_valid_itvls  // https://github.com/llvm/llvm-project/issues/19141
+        // https://github.com/llvm/llvm-project/issues/19141
+        decltype(dist)::param_type(0, area_valid_itvls)
 #else
-            std::nextafter(area_valid_itvls, area_valid_itvls + 1)
+        decltype(dist)::param_type(
+            0, std::nextafter(area_valid_itvls, area_valid_itvls + 1))
 #endif
-            )));
+            ));
 
     auto it_itvl(valid_itvls.lower_bound(ar_valid_itvls_before));
     double itvl_size(std::next(it_itvl) == valid_itvls.end()
