@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-//===-- class definitions --=== test change
+//===-- class definitions --===
 
 // clang-format off
 enum cat { ag, ca, cu, fe, sr, zn, pb, mn, al, ba, k, mg, na, nh4, sn, cr, co, ni, num_cats };
