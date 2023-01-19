@@ -34,18 +34,17 @@ int sim_rand_parking(const double &width) {
     // insert new car
     if (left_offset < 1 && right_offset < 1) {
       // remove interval
+      double itvl_len(*selected_itvl - itvl_start);
       while (++selected_itvl < itvl_prefixes.end()) {
-        selected_itvl[-1] = itvl_start;
+        selected_itvl[-1] = *selected_itvl - itvl_len;
       }
       itvl_prefixes.pop_back();
-      valid_area -= *selected_itvl - itvl_start;
       continue;
     }
     if (left_offset >= 1 && right_offset >= 1) {
       // add new interval
       size_t stop(static_cast<size_t>(selected_itvl - itvl_prefixes.begin()) +
                   1);
-      valid_area -= 2;
       itvl_prefixes.push_back(itvl_prefixes.back() - 2);
       for (size_t i(itvl_prefixes.size() - 2); i > stop; --i) {
         itvl_prefixes[i] = itvl_prefixes[i - 1] - 2;
