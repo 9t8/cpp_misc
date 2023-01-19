@@ -4,6 +4,10 @@
 #include <random>
 
 int sim_rand_parking(const double &width) {
+  if (width < 1) {
+    return 0;
+  }
+
   int cars_parked(0);
 
   // prefix sum of preceding valid area for each itvl
