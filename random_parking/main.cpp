@@ -10,7 +10,7 @@ int sim_rand_parking(const double &width) {
 
   for (; !itvl_prefixes.empty(); ++cars_parked) {
     // generate random location for new car
-    static std::mt19937_64 rng;  // currently deterministic
+    static std::mt19937_64 rng(std::random_device{}());
     static std::uniform_real_distribution<> dist;
     double new_loc(dist(rng,
 #ifdef __clang__
@@ -60,4 +60,4 @@ int sim_rand_parking(const double &width) {
   return cars_parked;
 }
 
-int main() { std::cout << sim_rand_parking(1) << "\n"; }
+int main() { std::cout << sim_rand_parking(2) << "\n"; }
