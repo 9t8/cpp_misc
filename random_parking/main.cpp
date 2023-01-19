@@ -42,7 +42,7 @@ int sim_rand_parking(const double &width) {
       continue;
     }
     if (left_offset >= 1 && right_offset >= 1) {
-      // add new interval
+      // add interval
       size_t stop(static_cast<size_t>(selected_itvl - itvl_prefixes.begin()));
       itvl_prefixes.push_back(itvl_prefixes.back() - 2);
       for (size_t i(itvl_prefixes.size() - 2); i > stop; --i) {
@@ -51,7 +51,7 @@ int sim_rand_parking(const double &width) {
       itvl_prefixes[stop] = new_loc - 1;
       continue;
     }
-    // move/shorten interval
+    // shorten interval
     double lost_area(std::min(left_offset, 1.) + std::min(right_offset, 1.));
     while (++selected_itvl < itvl_prefixes.end()) {
       *selected_itvl -= lost_area;
