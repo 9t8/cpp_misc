@@ -1,3 +1,4 @@
+#include <cassert>
 #include <iostream>
 #include <random>
 
@@ -31,6 +32,8 @@ int sim_rand_parking(const double &width) {
                         : selected_itvl[1]),
         left_offset(area_before_new_car - *selected_itvl),
         right_offset(itvl_end - area_before_new_car);
+    assert(left_offset >= 0);  // asserts not working
+    assert(right_offset >= 0);
 
     // insert new car
     if (left_offset < 1 && right_offset < 1) {
