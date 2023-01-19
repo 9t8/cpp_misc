@@ -1,17 +1,17 @@
 #include <iostream>
-#include <map>
 #include <random>
 
 int sim_rand_parking(const double &width) {
-  // <area of valid itvls before this itvl, start of this itvl>
-  std::map<double, double> valid_itvls{{0, 0}};
-
   int cars_parked(0);
-  // valid_area <- S_{0}^{width} valid_pos?(x)
-  for (double valid_area(width - 1); valid_area >= 0;) {
-    static std::mt19937_64 rng;  // deterministic
-    static std::uniform_real_distribution<> dist;
 
+  // prefix sum of preceding valid area for each itvl
+  std::vector<double> itvl_prefixes({0});
+
+  // valid_area = S_{0}^{width} valid_pos?(x)
+  for (double valid_area(width - 1); valid_area >= 0; ++cars_parked) {
+    // generate random location for new car
+    static std::mt19937_64 rng;  // currently deterministic
+    static std::uniform_real_distribution<> dist;
     double area_before_new_car(dist(
         rng,
 #ifdef __clang__
@@ -23,28 +23,44 @@ int sim_rand_parking(const double &width) {
 #endif
             ));
 
+    auto selected_itvl(lower_bound(itvl_prefixes.begin(), itvl_prefixes.end(),
+                                   area_before_new_car));
+
+    double itvl_end(selected_itvl + 1 == itvl_prefixes.end()
+                        ? valid_area
+                        : selected_itvl[1]),
+        left_offset(area_before_new_car - *selected_itvl),
+        right_offset(itvl_end - area_before_new_car);
+
     // insert new car
-    auto it_itvl(valid_itvls.lower_bound(area_before_new_car));
-    double itvl_size(std::next(it_itvl) == valid_itvls.end()
-                         ? valid_area - it_itvl->first
-                         : std::next(it_itvl)->first - it_itvl->first);
-
-    double left_space(it_itvl->second + area_before_new_car - it_itvl->first);
-
-    double right_space(it_itvl->second + itvl_size - area_before_new_car);
-
-    double lost_area(std::min(left_space, 1.) + std::min(right_space, 1.));
-
-    // TODO? shorten/delete current itvl
-    if (left_space >= 1) {
-      // TODO: shorten current itvl
+    if (left_offset < 1 && right_offset < 1) {
+      // remove interval
+      double itvl_len(itvl_end - *selected_itvl);
+      while (++selected_itvl < itvl_prefixes.end()) {
+        selected_itvl[-1] = *selected_itvl - itvl_len;
+      }
+      itvl_prefixes.pop_back();
+      valid_area -= itvl_len;
+      continue;
     }
-
-    if (right_space >= 1) {
-      // TODO: insert new itvl
+    if (left_offset >= 1 && right_offset >= 1) {
+      // add new interval
+      size_t stop(static_cast<size_t>(selected_itvl - itvl_prefixes.begin()) +
+                  1);
+      valid_area -= 2;
+      itvl_prefixes.push_back(itvl_prefixes.back() - 2);
+      for (size_t i(itvl_prefixes.size() - 2); i > stop; --i) {
+        itvl_prefixes[i] = itvl_prefixes[i - 1] - 2;
+      }
+      itvl_prefixes[stop] = area_before_new_car - 1;
+      continue;
     }
-
-    valid_area = -1;
+    // move/shorten interval
+    double lost_area(std::min(left_offset, 1.) + std::min(right_offset, 1.));
+    while (++selected_itvl < itvl_prefixes.end()) {
+      *selected_itvl -= lost_area;
+    }
+    valid_area -= lost_area;
   }
   return cars_parked;
 }
