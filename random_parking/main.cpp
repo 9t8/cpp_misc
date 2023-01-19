@@ -3,12 +3,14 @@
 #include <iostream>
 #include <random>
 
-int sim_rand_parking(const double &width) {
+typedef long long ll;
+
+ll sim_rand_parking(const double &width) {
   if (width < 1) {
     return 0;
   }
 
-  int cars_parked(0);
+  ll cars_parked(0);
 
   // prefix sum of preceding valid area for each itvl
   std::vector<double> itvl_prefixes{width - 1};
@@ -58,7 +60,7 @@ int sim_rand_parking(const double &width) {
     }
     // shorten interval
     double lost_area(std::min(left_offset, 1.) + std::min(right_offset, 1.));
-    while (++selected_itvl < itvl_prefixes.end()) {
+    for (; selected_itvl < itvl_prefixes.end(); ++selected_itvl) {
       *selected_itvl -= lost_area;
     }
   }
@@ -66,7 +68,8 @@ int sim_rand_parking(const double &width) {
 }
 
 int main() {
-  for (const double w : std::array<double, 1>{3}) {
+  for (const double w : std::array<double, 14>{0, .5, 1, 2, 3, 3.5, 4, 5, 1e1,
+                                               1e2, 1e3, 1e4, 1e5, 1e6}) {
     std::cout << w << ": " << sim_rand_parking(w) << std::endl;
   }
 }
