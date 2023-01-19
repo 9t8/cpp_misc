@@ -7,7 +7,7 @@ int sim_rand_parking(const double &width) {
   int cars_parked(0);
 
   // prefix sum of preceding valid area for each itvl
-  std::vector<double> itvl_prefixes({width - 1});
+  std::vector<double> itvl_prefixes{width - 1};
 
   for (; !itvl_prefixes.empty(); ++cars_parked) {
     // generate random location for new car
@@ -62,7 +62,7 @@ int sim_rand_parking(const double &width) {
 }
 
 int main() {
-  for (const double w : std::array<double, 1>({3})) {
+  for (const double w : std::array<double, 1>{3}) {
     std::cout << w << ": " << sim_rand_parking(w) << std::endl;
   }
 }
