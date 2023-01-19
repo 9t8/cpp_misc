@@ -1,3 +1,4 @@
+#include <array>
 #include <cassert>
 #include <iostream>
 #include <random>
@@ -60,4 +61,8 @@ int sim_rand_parking(const double &width) {
   return cars_parked;
 }
 
-int main() { std::cout << sim_rand_parking(2) << "\n"; }
+int main() {
+  for (const double w : std::array<double, 1>({3})) {
+    std::cout << w << ": " << sim_rand_parking(w) << std::endl;
+  }
+}
