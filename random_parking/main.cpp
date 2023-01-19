@@ -13,26 +13,25 @@ int sim_rand_parking(const double &width) {
     // generate random location for new car
     static std::mt19937_64 rng;  // currently deterministic
     static std::uniform_real_distribution<> dist;
-    double area_before_new_car(dist(
-        rng,
+    double new_loc(dist(rng,
 #ifdef __clang__
-        // https://github.com/llvm/llvm-project/issues/19141
-        decltype(dist)::param_type(0, valid_area)
+                        // https://github.com/llvm/llvm-project/issues/19141
+                        decltype(dist)::param_type(0, valid_area)
 #else
-        decltype(dist)::param_type(0,
-                                   std::nextafter(valid_area, valid_area + 1))
+                        decltype(dist)::param_type(
+                            0, std::nextafter(valid_area, valid_area + 1))
 #endif
-            ));
+                            ));
 
-    auto selected_itvl(lower_bound(itvl_prefixes.begin(), itvl_prefixes.end(),
-                                   area_before_new_car));
+    auto selected_itvl(
+        lower_bound(itvl_prefixes.begin(), itvl_prefixes.end(), new_loc));
 
     double itvl_end(selected_itvl + 1 == itvl_prefixes.end()
                         ? valid_area
                         : selected_itvl[1]),
-        left_offset(area_before_new_car - *selected_itvl),
-        right_offset(itvl_end - area_before_new_car);
-    assert(left_offset >= 0);  // asserts not working
+        left_offset(new_loc - *selected_itvl), right_offset(itvl_end - new_loc);
+    assert(new_loc >= 0);
+    assert(left_offset >= 0);
     assert(right_offset >= 0);
 
     // insert new car
@@ -55,7 +54,7 @@ int sim_rand_parking(const double &width) {
       for (size_t i(itvl_prefixes.size() - 2); i > stop; --i) {
         itvl_prefixes[i] = itvl_prefixes[i - 1] - 2;
       }
-      itvl_prefixes[stop] = area_before_new_car - 1;
+      itvl_prefixes[stop] = new_loc - 1;
       continue;
     }
     // move/shorten interval
