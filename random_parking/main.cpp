@@ -1,5 +1,3 @@
-#include <array>
-#include <cassert>
 #include <iostream>
 #include <random>
 
@@ -68,8 +66,8 @@ ll sim_rand_parking(const double &width) {
 }
 
 int main() {
-  for (const double w : std::array<double, 14>{0, .5, 1, 2, 3, 3.5, 4, 5, 1e1,
-                                               1e2, 1e3, 1e4, 1e5, 1e6}) {
+  for (const double w : std::vector<double>{0, .5, 1, 2, 3, 3.5, 4, 5, 1e1, 1e2,
+                                            1e3, 1e4, 1e5, 1e6}) {
     std::cout << w << ": " << sim_rand_parking(w) << std::endl;
   }
 }
