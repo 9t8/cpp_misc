@@ -23,8 +23,8 @@ int sim_rand_parking(const double &width) {
 #endif
                             ));
 
-    auto selected_itvl(lower_bound(itvl_prefixes.begin(), itvl_prefixes.end(),
-                                   new_loc));  // FIX
+    auto selected_itvl(
+        lower_bound(itvl_prefixes.begin(), itvl_prefixes.end(), new_loc));
 
     double itvl_start(
         selected_itvl == itvl_prefixes.begin() ? 0 : selected_itvl[-1]),
@@ -43,8 +43,7 @@ int sim_rand_parking(const double &width) {
     }
     if (left_offset >= 1 && right_offset >= 1) {
       // add new interval
-      size_t stop(static_cast<size_t>(selected_itvl - itvl_prefixes.begin()) +
-                  1);
+      size_t stop(static_cast<size_t>(selected_itvl - itvl_prefixes.begin()));
       itvl_prefixes.push_back(itvl_prefixes.back() - 2);
       for (size_t i(itvl_prefixes.size() - 2); i > stop; --i) {
         itvl_prefixes[i] = itvl_prefixes[i - 1] - 2;
