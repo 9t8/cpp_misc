@@ -3,7 +3,7 @@
 
 typedef long long ll;
 
-bool is_win(const ll &n) {
+bool is_win(const ll n) {
   // static std::unordered_map<ll, bool> cache;
 
   if (n <= 3) {
