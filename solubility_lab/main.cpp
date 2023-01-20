@@ -189,7 +189,7 @@ void gen_contradictions(const evidence_table &soluble_ev,
 
 int find_worst_mix(const std::deque<compound> &contradictions,
                    const evidence_table &soluble_ev,
-                   const evidence_table &insol_ev, const size_t &mixes_size) {
+                   const evidence_table &insol_ev, const size_t mixes_size) {
   std::vector<int> trouble_count(mixes_size);
   for (const auto &contradiction : contradictions) {
     for (const auto &mix_num :

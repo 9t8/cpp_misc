@@ -99,7 +99,7 @@ class Graph {
       std::vector<int> curr_gen(prev_gen.size() + 1, -1);
 
       for (int j(0); j < static_cast<int>(curr_gen.size()); ++j) {
-        static const auto &prev_gen_get([&](const size_t &pos) {
+        static const auto &prev_gen_get([&](const size_t pos) {
           return pos < prev_gen.size() ? std::min(prev_gen[pos] + 1, 1) : 0;
         });
 
