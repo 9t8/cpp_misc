@@ -16,17 +16,16 @@ ll sim_rand_parking(const double &width) {
   for (; !itvl_prefixes.empty(); ++cars_parked) {
     // generate random location for new car
     static std::mt19937_64 rng(std::random_device{}());
-    static std::uniform_real_distribution<> dist;
-    double new_loc(dist(rng,
-#ifdef __clang__
-                        // https://github.com/llvm/llvm-project/issues/19141
-                        decltype(dist)::param_type(0, itvl_prefixes.back())
+    double new_loc(std::uniform_real_distribution<>(0,
+#ifdef __clang__  // https://github.com/llvm/llvm-project/issues/19141
+                                                    itvl_prefixes.back()
 #else
-                        decltype(dist)::param_type(
-                            0, std::nextafter(itvl_prefixes.back(),
-                                              itvl_prefixes.back() + 1))
+                                                    std::nextafter(
+                                                        itvl_prefixes.back(),
+                                                        itvl_prefixes.back() +
+                                                            1)
 #endif
-                            ));
+                                                        )(rng));
 
     auto selected_itvl(
         lower_bound(itvl_prefixes.begin(), itvl_prefixes.end(), new_loc));
@@ -66,9 +65,15 @@ ll sim_rand_parking(const double &width) {
 }
 
 int main() {
-  for (const double w : std::vector<double>{0, .5, 1, 2, 3, 3.5, 4, 5, 1e1, 1e2,
-                                            1e3, 1e4, 1e5}) {
-    std::cout << w << ": " << static_cast<double>(sim_rand_parking(w)) / w
+  for (const double width :
+       std::vector<double>{.5, 1, 2, 3, 3.5, 4, 5, 1e1, 1e2, 1e3, 1e4, 1e5}) {
+    ll num_trials(static_cast<ll>(1e6 / width)), total(0);
+    for (ll i(0); i < num_trials; ++i) {
+      total += sim_rand_parking(width);
+    }
+    std::cout << width << " (" << num_trials << " trials): "
+              << static_cast<double>(total) / static_cast<double>(num_trials) /
+                     width
               << std::endl;
   }
 }
