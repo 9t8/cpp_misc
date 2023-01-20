@@ -3,7 +3,7 @@
 
 typedef long long ll;
 
-ll sim_rand_parking(const double &width) {
+ll sim_rand_parking(const double width) {
   if (width < 1) {
     return 0;
   }
