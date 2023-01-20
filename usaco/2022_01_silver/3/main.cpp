@@ -44,7 +44,7 @@ int main() {
   } while (next_permutation(cows.begin(), cows.end()));
 
   std::cout << min_num_hungry << "\n";
-  for (const auto &num : best_path) {
+  for (const ll num : best_path) {
     std::cout << num << "\n";
   }
 }

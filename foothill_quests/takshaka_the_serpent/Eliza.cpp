@@ -8,7 +8,7 @@ using namespace std;
 
 string lispify(string s) {
   ostringstream result;
-  for (const auto &c : s) {
+  for (const auto c : s) {
     switch (c) {
       case 'S':
         result << "Th";

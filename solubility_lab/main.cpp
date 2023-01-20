@@ -106,7 +106,7 @@ std::ostream &operator<<(std::ostream &os, const compound &c) {
 }
 
 std::ostream &operator<<(std::ostream &os, const std::deque<int> &di) {
-  for (const auto &i : di) os << " " << i;
+  for (const int i : di) os << " " << i;
 
   return os;
 }
@@ -192,11 +192,11 @@ int find_worst_mix(const std::deque<compound> &contradictions,
                    const evidence_table &insol_ev, const size_t mixes_size) {
   std::vector<int> trouble_count(mixes_size);
   for (const auto &contradiction : contradictions) {
-    for (const auto &mix_num :
+    for (const int mix_num :
          soluble_ev[contradiction.first][contradiction.second])
       ++trouble_count[mix_num];
 
-    for (const auto &mix_num :
+    for (const int mix_num :
          insol_ev[contradiction.first][contradiction.second])
       ++trouble_count[mix_num];
   }
