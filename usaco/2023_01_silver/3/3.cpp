@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 
 typedef long long ll;
 
@@ -7,7 +8,7 @@ int main() {
 
   ll n;
   std::cin >> n;
-  
+
   std::vector<ll> a(n);
   ll num_moves(0);
   for (auto &e : a) {
@@ -19,7 +20,7 @@ int main() {
   bool going_right(true);
   for (ll i(0); i < num_moves; ++i) {
     const auto move([&](bool go_right) -> void {
-      if (going_right = go_right) {
+      if ((going_right = go_right)) {
         --a[loc];
         ++loc;
         std::cout << "R";

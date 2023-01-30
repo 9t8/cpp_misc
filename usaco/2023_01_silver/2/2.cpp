@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 
 typedef long long ll;
 
@@ -17,7 +18,7 @@ int main() {
   for (ll i(0); i < n; ++i) {
     std::cin >> bottom_prices[i];
   }
-  
+
   // [n][n] stores total cost
   std::vector<std::vector<ll>> cow_counts(n + 1, std::vector<ll>(n + 1, 1));
   for (ll row(0); row < n + 1; ++row) {
