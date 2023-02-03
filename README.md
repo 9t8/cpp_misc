@@ -1,1 +1,1 @@
-# small_projects
+# small_programs
