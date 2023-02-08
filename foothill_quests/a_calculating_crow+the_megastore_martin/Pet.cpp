@@ -1,5 +1,3 @@
-
-
 #include "Pet.h"
 
 #include <bits/stdc++.h>
