@@ -1,5 +1,3 @@
-
-
 #include "Looping_Functions.h"
 
 #include <bits/stdc++.h>

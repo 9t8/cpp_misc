@@ -1,5 +1,3 @@
-
-
 #include "Eliza.h"
 
 #include <bits/stdc++.h>
