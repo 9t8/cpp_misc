@@ -5,14 +5,17 @@ LANG: C++17
 */
 
 #include <fstream>
+#include <iostream>
 
+using std::cin;
+using std::cout;
 typedef long long ll;
 
 int main() {
-  std::ofstream fout("test.out");
-  std::ifstream fin("test.in");
+  // std::ofstream cout("test.out");
+  // std::ifstream cin("test.in");
 
   ll a, b;
-  fin >> a >> b;
-  fout << a + b << "\n";
+  cin >> a >> b;
+  cout << a + b << "\n";
 }
