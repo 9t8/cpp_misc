@@ -1,3 +1,6 @@
+// runs multiple random parking simulations at various lengths approximates
+// renyi's parking constant at each length
+
 #include <iostream>
 #include <random>
 
