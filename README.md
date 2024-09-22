@@ -1,1 +1,3 @@
-# misc_cpp
+# Miscellaneous C++ programs
+
+USACO solutions and more
